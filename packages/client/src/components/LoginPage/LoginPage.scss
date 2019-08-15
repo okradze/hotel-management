@@ -1,0 +1,52 @@
+.LoginPage-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.LoginPage-form {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 3px rgba(var(--dark), 0.15);
+    padding: 4rem 3rem;
+
+    &__pg {
+        margin-top: 2rem;
+        font-size: 1.5rem;
+        color: rgba(var(--secondary), 1);
+        font-weight: 600;
+    }
+}
+
+.LoginForm {
+    display: flex;
+    flex-direction: column;
+
+    &__input-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2rem;
+    }
+    &__error {
+        margin-bottom: 2rem;
+    }
+
+    input {
+        min-width: 32rem;
+        flex: 1 1 auto;
+    }
+
+    label {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        color: rgba(var(--primary), 1);
+    }
+    button {
+        margin-bottom: 2rem;
+        
+    }
+}
+.SignupForm__error {
+    margin-top: 1.5rem;
+}

@@ -1,0 +1,32 @@
+{
+    "name": "hotel-booking",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "start": "node dist/index.js",
+        "heroku-postbuild": "babel src --out-dir dist --copy-files",
+        "dev": "env-cmd -f ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
+        "prisma-deploy": "prisma deploy -e ../config/dev.env && prisma generate -e ../config/dev.env"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "env-cmd": "^9.0.3",
+        "eslint": "^6.1.0",
+        "graphql-cli": "^3.0.12",
+        "nodemon": "^1.19.1"
+    },
+    "dependencies": {
+        "@hb/common": "1.0.0",
+        "@babel/polyfill": "^7.4.4",
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.4",
+        "cors": "^2.8.5",
+        "graphql-yoga": "^1.18.1",
+        "helmet": "^3.19.0",
+        "jsonwebtoken": "^8.5.1",
+        "prisma-binding": "^2.3.15"
+    }
+}

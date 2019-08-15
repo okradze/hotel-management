@@ -1,0 +1,39 @@
+@import './modal.scss';
+
+.BookForm {
+    --gap: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 3rem 0;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 3px rgba(var(--dark), 0.15);
+    padding: 3rem;
+
+    @media only screen and (max-width: 576px) {
+        padding: 2rem;
+    }
+    @media only screen and (max-width: 350px) {
+        padding: 1rem;
+    }
+
+    &__AutoComplete {
+        flex: 1 1 0;
+        margin: calc(var(--gap) / 2);
+    }
+    &__DateRangePicker {
+        margin: calc(var(--gap) / 2);
+    }
+    .DatePicker-container {
+        margin: 0 calc(var(--gap) / 2);
+    }
+    &__ColorPicker {
+        margin: calc(var(--gap) / 2);
+        cursor: pointer;
+    }
+
+    &__button {
+        margin: calc(var(--gap) / 2);
+        box-shadow: 1px 1px 3px rgba(var(--dark), 0.2);
+    }
+}

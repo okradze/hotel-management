@@ -1,0 +1,101 @@
+# import BookingOrderByInput, RoomOrderByInput, GuestOrderByInput from './generated/prisma.graphql'
+
+type Query {
+    rooms(data: QueryRoomsInput!): [Room!]!
+    bookings(data: QueryBookingsInput!): [Booking!]!
+    guests(data: QueryGuestsInput!): [Guest!]!
+    refreshToken: Boolean!
+}
+
+type Mutation {
+    login(data: LoginHotelInput): Boolean!
+    logout: Boolean!
+    createHotel(data: CreateHotelInput): Boolean!
+    createRoom(data: CreateRoomInput): Room!
+    createGuest(data: CreateGuestInput): Guest!
+    createBooking(data: CreateBookingInput): Booking!
+}
+
+type Hotel {
+    id: ID!
+    name: String!
+    email: String!
+    phone: String!
+    rooms: [Room!]!
+    bookings: [Booking!]!
+    guests: [Guest!]!
+}
+
+type Room {
+    id: ID!
+    roomNumber: String!
+    rate: Int!
+    type: String!
+    hotel: Hotel!
+    bookings: [Booking!]!
+}
+
+type Guest {
+    id: ID!
+    name: String!
+    phone: String!
+    hotel: Hotel!
+    bookings: [Booking!]!
+}
+
+type Booking {
+    id: ID!
+    hotel: Hotel!
+    room: Room!
+    guest: Guest!
+    checkIn: String!
+    checkOut: String!
+    color: String!
+}
+
+input QueryRoomsInput {
+    orderBy: RoomOrderByInput
+    query: String
+}
+
+input QueryGuestsInput {
+    orderBy: GuestOrderByInput
+    query: String
+}
+
+input QueryBookingsInput {
+    startDate: String!
+    orderBy: BookingOrderByInput
+    roomId: ID
+}
+
+input LoginHotelInput {
+    email: String!
+    password: String!
+}
+
+input CreateHotelInput {
+    name: String!
+    email: String!
+    phone: String!
+    password: String!
+}
+
+input CreateRoomInput {
+    roomNumber: String!
+    rate: Int!
+    type: String!
+}
+
+input CreateGuestInput {
+    name: String!
+    phone: String!
+}
+
+input CreateBookingInput {
+    checkIn: String!
+    checkOut: String!
+    color: String!
+    room: ID!
+    guest: ID!
+}

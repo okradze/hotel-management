@@ -1,0 +1,102 @@
+.Header--full {
+    position: sticky;
+    top: 0;
+    background-color: var(--white);
+    z-index: 8;
+    box-shadow: 0px 3px 3px rgba(var(--dark), 0.15);
+    left: 0;
+    right: 0;
+}
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.nav {
+    &__list {
+        display: flex;
+    }
+    &__item {
+        list-style: none;
+    }
+    &__link {
+        font-size: 1.6rem;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: rgba(var(--light-primary), 1);
+        padding: 1.2rem 2px;
+        font-weight: 400;
+        margin-right: 4rem;
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+        &--last {
+            margin-right: 0;
+        }
+
+        &:hover {
+            color: rgba(var(--primary), 1);
+            border-color: rgba(var(--primary), 1);
+        }
+        &:hover svg {
+            fill: rgba(var(--primary), 1);
+        }
+    }
+    &__icon {
+        fill: rgba(var(--light-primary), 1);
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-right: 1rem;
+    }
+}
+
+.dropdown {
+    cursor: pointer;
+    display: flex;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    &__icon {
+        position: relative;
+    }
+
+    &__icon::before {
+        content: '';
+        display: block;
+        cursor: pointer;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 10px 0 10px;
+        border-color: rgba(var(--primary), 1) transparent transparent
+            transparent;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &__logo {
+        width: 2rem;
+        height: 2rem;
+    }
+    &__content {
+        position: absolute;
+        top: calc(100% + 3px);
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        border: 2px solid var(--light-grey);
+        border-radius: 5px;
+    }
+    &__item {
+        padding: 2rem;
+        list-style: none;
+        cursor: default;
+    }
+}

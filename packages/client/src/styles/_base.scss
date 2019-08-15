@@ -1,0 +1,39 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+:root {
+    --white: #fff;
+    --primary: 12, 52, 75;
+    --light-primary: 60, 85, 107;
+    --secondary: 24, 197, 125;
+    --light-grey: #eff3f5;
+    --dark: 68, 68, 68;
+    --border: #ebebeb;
+    --border-radius: 10px;
+    --focus: rgba(48, 140, 219, 1);
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.6rem;
+    color: rgba(var(--dark), 1);
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--light-grey);
+}
+
+.App {
+    min-height: 100vh;
+    overflow: auto;
+    padding-bottom: 3rem;
+}

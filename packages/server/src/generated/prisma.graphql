@@ -1,0 +1,1255 @@
+type AggregateBooking {
+  count: Int!
+}
+
+type AggregateGuest {
+  count: Int!
+}
+
+type AggregateHotel {
+  count: Int!
+}
+
+type AggregateRoom {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+type Booking {
+  id: ID!
+  checkIn: DateTime!
+  checkOut: DateTime!
+  color: String!
+  hotel: Hotel!
+  room: Room!
+  guest: Guest!
+}
+
+type BookingConnection {
+  pageInfo: PageInfo!
+  edges: [BookingEdge]!
+  aggregate: AggregateBooking!
+}
+
+input BookingCreateInput {
+  id: ID
+  checkIn: DateTime!
+  checkOut: DateTime!
+  color: String!
+  hotel: HotelCreateOneWithoutBookingsInput!
+  room: RoomCreateOneWithoutBookingsInput!
+  guest: GuestCreateOneWithoutBookingsInput!
+}
+
+input BookingCreateManyWithoutGuestInput {
+  create: [BookingCreateWithoutGuestInput!]
+  connect: [BookingWhereUniqueInput!]
+}
+
+input BookingCreateManyWithoutHotelInput {
+  create: [BookingCreateWithoutHotelInput!]
+  connect: [BookingWhereUniqueInput!]
+}
+
+input BookingCreateManyWithoutRoomInput {
+  create: [BookingCreateWithoutRoomInput!]
+  connect: [BookingWhereUniqueInput!]
+}
+
+input BookingCreateWithoutGuestInput {
+  id: ID
+  checkIn: DateTime!
+  checkOut: DateTime!
+  color: String!
+  hotel: HotelCreateOneWithoutBookingsInput!
+  room: RoomCreateOneWithoutBookingsInput!
+}
+
+input BookingCreateWithoutHotelInput {
+  id: ID
+  checkIn: DateTime!
+  checkOut: DateTime!
+  color: String!
+  room: RoomCreateOneWithoutBookingsInput!
+  guest: GuestCreateOneWithoutBookingsInput!
+}
+
+input BookingCreateWithoutRoomInput {
+  id: ID
+  checkIn: DateTime!
+  checkOut: DateTime!
+  color: String!
+  hotel: HotelCreateOneWithoutBookingsInput!
+  guest: GuestCreateOneWithoutBookingsInput!
+}
+
+type BookingEdge {
+  node: Booking!
+  cursor: String!
+}
+
+enum BookingOrderByInput {
+  id_ASC
+  id_DESC
+  checkIn_ASC
+  checkIn_DESC
+  checkOut_ASC
+  checkOut_DESC
+  color_ASC
+  color_DESC
+}
+
+type BookingPreviousValues {
+  id: ID!
+  checkIn: DateTime!
+  checkOut: DateTime!
+  color: String!
+}
+
+input BookingScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  checkIn: DateTime
+  checkIn_not: DateTime
+  checkIn_in: [DateTime!]
+  checkIn_not_in: [DateTime!]
+  checkIn_lt: DateTime
+  checkIn_lte: DateTime
+  checkIn_gt: DateTime
+  checkIn_gte: DateTime
+  checkOut: DateTime
+  checkOut_not: DateTime
+  checkOut_in: [DateTime!]
+  checkOut_not_in: [DateTime!]
+  checkOut_lt: DateTime
+  checkOut_lte: DateTime
+  checkOut_gt: DateTime
+  checkOut_gte: DateTime
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
+  AND: [BookingScalarWhereInput!]
+  OR: [BookingScalarWhereInput!]
+  NOT: [BookingScalarWhereInput!]
+}
+
+type BookingSubscriptionPayload {
+  mutation: MutationType!
+  node: Booking
+  updatedFields: [String!]
+  previousValues: BookingPreviousValues
+}
+
+input BookingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BookingWhereInput
+  AND: [BookingSubscriptionWhereInput!]
+  OR: [BookingSubscriptionWhereInput!]
+  NOT: [BookingSubscriptionWhereInput!]
+}
+
+input BookingUpdateInput {
+  checkIn: DateTime
+  checkOut: DateTime
+  color: String
+  hotel: HotelUpdateOneRequiredWithoutBookingsInput
+  room: RoomUpdateOneRequiredWithoutBookingsInput
+  guest: GuestUpdateOneRequiredWithoutBookingsInput
+}
+
+input BookingUpdateManyDataInput {
+  checkIn: DateTime
+  checkOut: DateTime
+  color: String
+}
+
+input BookingUpdateManyMutationInput {
+  checkIn: DateTime
+  checkOut: DateTime
+  color: String
+}
+
+input BookingUpdateManyWithoutGuestInput {
+  create: [BookingCreateWithoutGuestInput!]
+  delete: [BookingWhereUniqueInput!]
+  connect: [BookingWhereUniqueInput!]
+  set: [BookingWhereUniqueInput!]
+  disconnect: [BookingWhereUniqueInput!]
+  update: [BookingUpdateWithWhereUniqueWithoutGuestInput!]
+  upsert: [BookingUpsertWithWhereUniqueWithoutGuestInput!]
+  deleteMany: [BookingScalarWhereInput!]
+  updateMany: [BookingUpdateManyWithWhereNestedInput!]
+}
+
+input BookingUpdateManyWithoutHotelInput {
+  create: [BookingCreateWithoutHotelInput!]
+  delete: [BookingWhereUniqueInput!]
+  connect: [BookingWhereUniqueInput!]
+  set: [BookingWhereUniqueInput!]
+  disconnect: [BookingWhereUniqueInput!]
+  update: [BookingUpdateWithWhereUniqueWithoutHotelInput!]
+  upsert: [BookingUpsertWithWhereUniqueWithoutHotelInput!]
+  deleteMany: [BookingScalarWhereInput!]
+  updateMany: [BookingUpdateManyWithWhereNestedInput!]
+}
+
+input BookingUpdateManyWithoutRoomInput {
+  create: [BookingCreateWithoutRoomInput!]
+  delete: [BookingWhereUniqueInput!]
+  connect: [BookingWhereUniqueInput!]
+  set: [BookingWhereUniqueInput!]
+  disconnect: [BookingWhereUniqueInput!]
+  update: [BookingUpdateWithWhereUniqueWithoutRoomInput!]
+  upsert: [BookingUpsertWithWhereUniqueWithoutRoomInput!]
+  deleteMany: [BookingScalarWhereInput!]
+  updateMany: [BookingUpdateManyWithWhereNestedInput!]
+}
+
+input BookingUpdateManyWithWhereNestedInput {
+  where: BookingScalarWhereInput!
+  data: BookingUpdateManyDataInput!
+}
+
+input BookingUpdateWithoutGuestDataInput {
+  checkIn: DateTime
+  checkOut: DateTime
+  color: String
+  hotel: HotelUpdateOneRequiredWithoutBookingsInput
+  room: RoomUpdateOneRequiredWithoutBookingsInput
+}
+
+input BookingUpdateWithoutHotelDataInput {
+  checkIn: DateTime
+  checkOut: DateTime
+  color: String
+  room: RoomUpdateOneRequiredWithoutBookingsInput
+  guest: GuestUpdateOneRequiredWithoutBookingsInput
+}
+
+input BookingUpdateWithoutRoomDataInput {
+  checkIn: DateTime
+  checkOut: DateTime
+  color: String
+  hotel: HotelUpdateOneRequiredWithoutBookingsInput
+  guest: GuestUpdateOneRequiredWithoutBookingsInput
+}
+
+input BookingUpdateWithWhereUniqueWithoutGuestInput {
+  where: BookingWhereUniqueInput!
+  data: BookingUpdateWithoutGuestDataInput!
+}
+
+input BookingUpdateWithWhereUniqueWithoutHotelInput {
+  where: BookingWhereUniqueInput!
+  data: BookingUpdateWithoutHotelDataInput!
+}
+
+input BookingUpdateWithWhereUniqueWithoutRoomInput {
+  where: BookingWhereUniqueInput!
+  data: BookingUpdateWithoutRoomDataInput!
+}
+
+input BookingUpsertWithWhereUniqueWithoutGuestInput {
+  where: BookingWhereUniqueInput!
+  update: BookingUpdateWithoutGuestDataInput!
+  create: BookingCreateWithoutGuestInput!
+}
+
+input BookingUpsertWithWhereUniqueWithoutHotelInput {
+  where: BookingWhereUniqueInput!
+  update: BookingUpdateWithoutHotelDataInput!
+  create: BookingCreateWithoutHotelInput!
+}
+
+input BookingUpsertWithWhereUniqueWithoutRoomInput {
+  where: BookingWhereUniqueInput!
+  update: BookingUpdateWithoutRoomDataInput!
+  create: BookingCreateWithoutRoomInput!
+}
+
+input BookingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  checkIn: DateTime
+  checkIn_not: DateTime
+  checkIn_in: [DateTime!]
+  checkIn_not_in: [DateTime!]
+  checkIn_lt: DateTime
+  checkIn_lte: DateTime
+  checkIn_gt: DateTime
+  checkIn_gte: DateTime
+  checkOut: DateTime
+  checkOut_not: DateTime
+  checkOut_in: [DateTime!]
+  checkOut_not_in: [DateTime!]
+  checkOut_lt: DateTime
+  checkOut_lte: DateTime
+  checkOut_gt: DateTime
+  checkOut_gte: DateTime
+  color: String
+  color_not: String
+  color_in: [String!]
+  color_not_in: [String!]
+  color_lt: String
+  color_lte: String
+  color_gt: String
+  color_gte: String
+  color_contains: String
+  color_not_contains: String
+  color_starts_with: String
+  color_not_starts_with: String
+  color_ends_with: String
+  color_not_ends_with: String
+  hotel: HotelWhereInput
+  room: RoomWhereInput
+  guest: GuestWhereInput
+  AND: [BookingWhereInput!]
+  OR: [BookingWhereInput!]
+  NOT: [BookingWhereInput!]
+}
+
+input BookingWhereUniqueInput {
+  id: ID
+}
+
+scalar DateTime
+
+type Guest {
+  id: ID!
+  name: String!
+  phone: String!
+  hotel: Hotel!
+  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
+}
+
+type GuestConnection {
+  pageInfo: PageInfo!
+  edges: [GuestEdge]!
+  aggregate: AggregateGuest!
+}
+
+input GuestCreateInput {
+  id: ID
+  name: String!
+  phone: String!
+  hotel: HotelCreateOneWithoutGuestsInput!
+  bookings: BookingCreateManyWithoutGuestInput
+}
+
+input GuestCreateManyWithoutHotelInput {
+  create: [GuestCreateWithoutHotelInput!]
+  connect: [GuestWhereUniqueInput!]
+}
+
+input GuestCreateOneWithoutBookingsInput {
+  create: GuestCreateWithoutBookingsInput
+  connect: GuestWhereUniqueInput
+}
+
+input GuestCreateWithoutBookingsInput {
+  id: ID
+  name: String!
+  phone: String!
+  hotel: HotelCreateOneWithoutGuestsInput!
+}
+
+input GuestCreateWithoutHotelInput {
+  id: ID
+  name: String!
+  phone: String!
+  bookings: BookingCreateManyWithoutGuestInput
+}
+
+type GuestEdge {
+  node: Guest!
+  cursor: String!
+}
+
+enum GuestOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  phone_ASC
+  phone_DESC
+}
+
+type GuestPreviousValues {
+  id: ID!
+  name: String!
+  phone: String!
+}
+
+input GuestScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  AND: [GuestScalarWhereInput!]
+  OR: [GuestScalarWhereInput!]
+  NOT: [GuestScalarWhereInput!]
+}
+
+type GuestSubscriptionPayload {
+  mutation: MutationType!
+  node: Guest
+  updatedFields: [String!]
+  previousValues: GuestPreviousValues
+}
+
+input GuestSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GuestWhereInput
+  AND: [GuestSubscriptionWhereInput!]
+  OR: [GuestSubscriptionWhereInput!]
+  NOT: [GuestSubscriptionWhereInput!]
+}
+
+input GuestUpdateInput {
+  name: String
+  phone: String
+  hotel: HotelUpdateOneRequiredWithoutGuestsInput
+  bookings: BookingUpdateManyWithoutGuestInput
+}
+
+input GuestUpdateManyDataInput {
+  name: String
+  phone: String
+}
+
+input GuestUpdateManyMutationInput {
+  name: String
+  phone: String
+}
+
+input GuestUpdateManyWithoutHotelInput {
+  create: [GuestCreateWithoutHotelInput!]
+  delete: [GuestWhereUniqueInput!]
+  connect: [GuestWhereUniqueInput!]
+  set: [GuestWhereUniqueInput!]
+  disconnect: [GuestWhereUniqueInput!]
+  update: [GuestUpdateWithWhereUniqueWithoutHotelInput!]
+  upsert: [GuestUpsertWithWhereUniqueWithoutHotelInput!]
+  deleteMany: [GuestScalarWhereInput!]
+  updateMany: [GuestUpdateManyWithWhereNestedInput!]
+}
+
+input GuestUpdateManyWithWhereNestedInput {
+  where: GuestScalarWhereInput!
+  data: GuestUpdateManyDataInput!
+}
+
+input GuestUpdateOneRequiredWithoutBookingsInput {
+  create: GuestCreateWithoutBookingsInput
+  update: GuestUpdateWithoutBookingsDataInput
+  upsert: GuestUpsertWithoutBookingsInput
+  connect: GuestWhereUniqueInput
+}
+
+input GuestUpdateWithoutBookingsDataInput {
+  name: String
+  phone: String
+  hotel: HotelUpdateOneRequiredWithoutGuestsInput
+}
+
+input GuestUpdateWithoutHotelDataInput {
+  name: String
+  phone: String
+  bookings: BookingUpdateManyWithoutGuestInput
+}
+
+input GuestUpdateWithWhereUniqueWithoutHotelInput {
+  where: GuestWhereUniqueInput!
+  data: GuestUpdateWithoutHotelDataInput!
+}
+
+input GuestUpsertWithoutBookingsInput {
+  update: GuestUpdateWithoutBookingsDataInput!
+  create: GuestCreateWithoutBookingsInput!
+}
+
+input GuestUpsertWithWhereUniqueWithoutHotelInput {
+  where: GuestWhereUniqueInput!
+  update: GuestUpdateWithoutHotelDataInput!
+  create: GuestCreateWithoutHotelInput!
+}
+
+input GuestWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  hotel: HotelWhereInput
+  bookings_every: BookingWhereInput
+  bookings_some: BookingWhereInput
+  bookings_none: BookingWhereInput
+  AND: [GuestWhereInput!]
+  OR: [GuestWhereInput!]
+  NOT: [GuestWhereInput!]
+}
+
+input GuestWhereUniqueInput {
+  id: ID
+}
+
+type Hotel {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String!
+  password: String!
+  rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
+  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
+  guests(where: GuestWhereInput, orderBy: GuestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Guest!]
+}
+
+type HotelConnection {
+  pageInfo: PageInfo!
+  edges: [HotelEdge]!
+  aggregate: AggregateHotel!
+}
+
+input HotelCreateInput {
+  id: ID
+  name: String!
+  email: String!
+  phone: String!
+  password: String!
+  rooms: RoomCreateManyWithoutHotelInput
+  bookings: BookingCreateManyWithoutHotelInput
+  guests: GuestCreateManyWithoutHotelInput
+}
+
+input HotelCreateOneWithoutBookingsInput {
+  create: HotelCreateWithoutBookingsInput
+  connect: HotelWhereUniqueInput
+}
+
+input HotelCreateOneWithoutGuestsInput {
+  create: HotelCreateWithoutGuestsInput
+  connect: HotelWhereUniqueInput
+}
+
+input HotelCreateOneWithoutRoomsInput {
+  create: HotelCreateWithoutRoomsInput
+  connect: HotelWhereUniqueInput
+}
+
+input HotelCreateWithoutBookingsInput {
+  id: ID
+  name: String!
+  email: String!
+  phone: String!
+  password: String!
+  rooms: RoomCreateManyWithoutHotelInput
+  guests: GuestCreateManyWithoutHotelInput
+}
+
+input HotelCreateWithoutGuestsInput {
+  id: ID
+  name: String!
+  email: String!
+  phone: String!
+  password: String!
+  rooms: RoomCreateManyWithoutHotelInput
+  bookings: BookingCreateManyWithoutHotelInput
+}
+
+input HotelCreateWithoutRoomsInput {
+  id: ID
+  name: String!
+  email: String!
+  phone: String!
+  password: String!
+  bookings: BookingCreateManyWithoutHotelInput
+  guests: GuestCreateManyWithoutHotelInput
+}
+
+type HotelEdge {
+  node: Hotel!
+  cursor: String!
+}
+
+enum HotelOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  phone_ASC
+  phone_DESC
+  password_ASC
+  password_DESC
+}
+
+type HotelPreviousValues {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String!
+  password: String!
+}
+
+type HotelSubscriptionPayload {
+  mutation: MutationType!
+  node: Hotel
+  updatedFields: [String!]
+  previousValues: HotelPreviousValues
+}
+
+input HotelSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: HotelWhereInput
+  AND: [HotelSubscriptionWhereInput!]
+  OR: [HotelSubscriptionWhereInput!]
+  NOT: [HotelSubscriptionWhereInput!]
+}
+
+input HotelUpdateInput {
+  name: String
+  email: String
+  phone: String
+  password: String
+  rooms: RoomUpdateManyWithoutHotelInput
+  bookings: BookingUpdateManyWithoutHotelInput
+  guests: GuestUpdateManyWithoutHotelInput
+}
+
+input HotelUpdateManyMutationInput {
+  name: String
+  email: String
+  phone: String
+  password: String
+}
+
+input HotelUpdateOneRequiredWithoutBookingsInput {
+  create: HotelCreateWithoutBookingsInput
+  update: HotelUpdateWithoutBookingsDataInput
+  upsert: HotelUpsertWithoutBookingsInput
+  connect: HotelWhereUniqueInput
+}
+
+input HotelUpdateOneRequiredWithoutGuestsInput {
+  create: HotelCreateWithoutGuestsInput
+  update: HotelUpdateWithoutGuestsDataInput
+  upsert: HotelUpsertWithoutGuestsInput
+  connect: HotelWhereUniqueInput
+}
+
+input HotelUpdateOneRequiredWithoutRoomsInput {
+  create: HotelCreateWithoutRoomsInput
+  update: HotelUpdateWithoutRoomsDataInput
+  upsert: HotelUpsertWithoutRoomsInput
+  connect: HotelWhereUniqueInput
+}
+
+input HotelUpdateWithoutBookingsDataInput {
+  name: String
+  email: String
+  phone: String
+  password: String
+  rooms: RoomUpdateManyWithoutHotelInput
+  guests: GuestUpdateManyWithoutHotelInput
+}
+
+input HotelUpdateWithoutGuestsDataInput {
+  name: String
+  email: String
+  phone: String
+  password: String
+  rooms: RoomUpdateManyWithoutHotelInput
+  bookings: BookingUpdateManyWithoutHotelInput
+}
+
+input HotelUpdateWithoutRoomsDataInput {
+  name: String
+  email: String
+  phone: String
+  password: String
+  bookings: BookingUpdateManyWithoutHotelInput
+  guests: GuestUpdateManyWithoutHotelInput
+}
+
+input HotelUpsertWithoutBookingsInput {
+  update: HotelUpdateWithoutBookingsDataInput!
+  create: HotelCreateWithoutBookingsInput!
+}
+
+input HotelUpsertWithoutGuestsInput {
+  update: HotelUpdateWithoutGuestsDataInput!
+  create: HotelCreateWithoutGuestsInput!
+}
+
+input HotelUpsertWithoutRoomsInput {
+  update: HotelUpdateWithoutRoomsDataInput!
+  create: HotelCreateWithoutRoomsInput!
+}
+
+input HotelWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  phone: String
+  phone_not: String
+  phone_in: [String!]
+  phone_not_in: [String!]
+  phone_lt: String
+  phone_lte: String
+  phone_gt: String
+  phone_gte: String
+  phone_contains: String
+  phone_not_contains: String
+  phone_starts_with: String
+  phone_not_starts_with: String
+  phone_ends_with: String
+  phone_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  rooms_every: RoomWhereInput
+  rooms_some: RoomWhereInput
+  rooms_none: RoomWhereInput
+  bookings_every: BookingWhereInput
+  bookings_some: BookingWhereInput
+  bookings_none: BookingWhereInput
+  guests_every: GuestWhereInput
+  guests_some: GuestWhereInput
+  guests_none: GuestWhereInput
+  AND: [HotelWhereInput!]
+  OR: [HotelWhereInput!]
+  NOT: [HotelWhereInput!]
+}
+
+input HotelWhereUniqueInput {
+  id: ID
+  email: String
+  phone: String
+}
+
+scalar Long
+
+type Mutation {
+  createBooking(data: BookingCreateInput!): Booking!
+  updateBooking(data: BookingUpdateInput!, where: BookingWhereUniqueInput!): Booking
+  updateManyBookings(data: BookingUpdateManyMutationInput!, where: BookingWhereInput): BatchPayload!
+  upsertBooking(where: BookingWhereUniqueInput!, create: BookingCreateInput!, update: BookingUpdateInput!): Booking!
+  deleteBooking(where: BookingWhereUniqueInput!): Booking
+  deleteManyBookings(where: BookingWhereInput): BatchPayload!
+  createGuest(data: GuestCreateInput!): Guest!
+  updateGuest(data: GuestUpdateInput!, where: GuestWhereUniqueInput!): Guest
+  updateManyGuests(data: GuestUpdateManyMutationInput!, where: GuestWhereInput): BatchPayload!
+  upsertGuest(where: GuestWhereUniqueInput!, create: GuestCreateInput!, update: GuestUpdateInput!): Guest!
+  deleteGuest(where: GuestWhereUniqueInput!): Guest
+  deleteManyGuests(where: GuestWhereInput): BatchPayload!
+  createHotel(data: HotelCreateInput!): Hotel!
+  updateHotel(data: HotelUpdateInput!, where: HotelWhereUniqueInput!): Hotel
+  updateManyHotels(data: HotelUpdateManyMutationInput!, where: HotelWhereInput): BatchPayload!
+  upsertHotel(where: HotelWhereUniqueInput!, create: HotelCreateInput!, update: HotelUpdateInput!): Hotel!
+  deleteHotel(where: HotelWhereUniqueInput!): Hotel
+  deleteManyHotels(where: HotelWhereInput): BatchPayload!
+  createRoom(data: RoomCreateInput!): Room!
+  updateRoom(data: RoomUpdateInput!, where: RoomWhereUniqueInput!): Room
+  updateManyRooms(data: RoomUpdateManyMutationInput!, where: RoomWhereInput): BatchPayload!
+  upsertRoom(where: RoomWhereUniqueInput!, create: RoomCreateInput!, update: RoomUpdateInput!): Room!
+  deleteRoom(where: RoomWhereUniqueInput!): Room
+  deleteManyRooms(where: RoomWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  booking(where: BookingWhereUniqueInput!): Booking
+  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking]!
+  bookingsConnection(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookingConnection!
+  guest(where: GuestWhereUniqueInput!): Guest
+  guests(where: GuestWhereInput, orderBy: GuestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Guest]!
+  guestsConnection(where: GuestWhereInput, orderBy: GuestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GuestConnection!
+  hotel(where: HotelWhereUniqueInput!): Hotel
+  hotels(where: HotelWhereInput, orderBy: HotelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hotel]!
+  hotelsConnection(where: HotelWhereInput, orderBy: HotelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HotelConnection!
+  room(where: RoomWhereUniqueInput!): Room
+  rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room]!
+  roomsConnection(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoomConnection!
+  node(id: ID!): Node
+}
+
+type Room {
+  id: ID!
+  roomNumber: String!
+  rate: Int!
+  type: String!
+  hotel: Hotel!
+  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
+}
+
+type RoomConnection {
+  pageInfo: PageInfo!
+  edges: [RoomEdge]!
+  aggregate: AggregateRoom!
+}
+
+input RoomCreateInput {
+  id: ID
+  roomNumber: String!
+  rate: Int!
+  type: String!
+  hotel: HotelCreateOneWithoutRoomsInput!
+  bookings: BookingCreateManyWithoutRoomInput
+}
+
+input RoomCreateManyWithoutHotelInput {
+  create: [RoomCreateWithoutHotelInput!]
+  connect: [RoomWhereUniqueInput!]
+}
+
+input RoomCreateOneWithoutBookingsInput {
+  create: RoomCreateWithoutBookingsInput
+  connect: RoomWhereUniqueInput
+}
+
+input RoomCreateWithoutBookingsInput {
+  id: ID
+  roomNumber: String!
+  rate: Int!
+  type: String!
+  hotel: HotelCreateOneWithoutRoomsInput!
+}
+
+input RoomCreateWithoutHotelInput {
+  id: ID
+  roomNumber: String!
+  rate: Int!
+  type: String!
+  bookings: BookingCreateManyWithoutRoomInput
+}
+
+type RoomEdge {
+  node: Room!
+  cursor: String!
+}
+
+enum RoomOrderByInput {
+  id_ASC
+  id_DESC
+  roomNumber_ASC
+  roomNumber_DESC
+  rate_ASC
+  rate_DESC
+  type_ASC
+  type_DESC
+}
+
+type RoomPreviousValues {
+  id: ID!
+  roomNumber: String!
+  rate: Int!
+  type: String!
+}
+
+input RoomScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  roomNumber: String
+  roomNumber_not: String
+  roomNumber_in: [String!]
+  roomNumber_not_in: [String!]
+  roomNumber_lt: String
+  roomNumber_lte: String
+  roomNumber_gt: String
+  roomNumber_gte: String
+  roomNumber_contains: String
+  roomNumber_not_contains: String
+  roomNumber_starts_with: String
+  roomNumber_not_starts_with: String
+  roomNumber_ends_with: String
+  roomNumber_not_ends_with: String
+  rate: Int
+  rate_not: Int
+  rate_in: [Int!]
+  rate_not_in: [Int!]
+  rate_lt: Int
+  rate_lte: Int
+  rate_gt: Int
+  rate_gte: Int
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  AND: [RoomScalarWhereInput!]
+  OR: [RoomScalarWhereInput!]
+  NOT: [RoomScalarWhereInput!]
+}
+
+type RoomSubscriptionPayload {
+  mutation: MutationType!
+  node: Room
+  updatedFields: [String!]
+  previousValues: RoomPreviousValues
+}
+
+input RoomSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RoomWhereInput
+  AND: [RoomSubscriptionWhereInput!]
+  OR: [RoomSubscriptionWhereInput!]
+  NOT: [RoomSubscriptionWhereInput!]
+}
+
+input RoomUpdateInput {
+  roomNumber: String
+  rate: Int
+  type: String
+  hotel: HotelUpdateOneRequiredWithoutRoomsInput
+  bookings: BookingUpdateManyWithoutRoomInput
+}
+
+input RoomUpdateManyDataInput {
+  roomNumber: String
+  rate: Int
+  type: String
+}
+
+input RoomUpdateManyMutationInput {
+  roomNumber: String
+  rate: Int
+  type: String
+}
+
+input RoomUpdateManyWithoutHotelInput {
+  create: [RoomCreateWithoutHotelInput!]
+  delete: [RoomWhereUniqueInput!]
+  connect: [RoomWhereUniqueInput!]
+  set: [RoomWhereUniqueInput!]
+  disconnect: [RoomWhereUniqueInput!]
+  update: [RoomUpdateWithWhereUniqueWithoutHotelInput!]
+  upsert: [RoomUpsertWithWhereUniqueWithoutHotelInput!]
+  deleteMany: [RoomScalarWhereInput!]
+  updateMany: [RoomUpdateManyWithWhereNestedInput!]
+}
+
+input RoomUpdateManyWithWhereNestedInput {
+  where: RoomScalarWhereInput!
+  data: RoomUpdateManyDataInput!
+}
+
+input RoomUpdateOneRequiredWithoutBookingsInput {
+  create: RoomCreateWithoutBookingsInput
+  update: RoomUpdateWithoutBookingsDataInput
+  upsert: RoomUpsertWithoutBookingsInput
+  connect: RoomWhereUniqueInput
+}
+
+input RoomUpdateWithoutBookingsDataInput {
+  roomNumber: String
+  rate: Int
+  type: String
+  hotel: HotelUpdateOneRequiredWithoutRoomsInput
+}
+
+input RoomUpdateWithoutHotelDataInput {
+  roomNumber: String
+  rate: Int
+  type: String
+  bookings: BookingUpdateManyWithoutRoomInput
+}
+
+input RoomUpdateWithWhereUniqueWithoutHotelInput {
+  where: RoomWhereUniqueInput!
+  data: RoomUpdateWithoutHotelDataInput!
+}
+
+input RoomUpsertWithoutBookingsInput {
+  update: RoomUpdateWithoutBookingsDataInput!
+  create: RoomCreateWithoutBookingsInput!
+}
+
+input RoomUpsertWithWhereUniqueWithoutHotelInput {
+  where: RoomWhereUniqueInput!
+  update: RoomUpdateWithoutHotelDataInput!
+  create: RoomCreateWithoutHotelInput!
+}
+
+input RoomWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  roomNumber: String
+  roomNumber_not: String
+  roomNumber_in: [String!]
+  roomNumber_not_in: [String!]
+  roomNumber_lt: String
+  roomNumber_lte: String
+  roomNumber_gt: String
+  roomNumber_gte: String
+  roomNumber_contains: String
+  roomNumber_not_contains: String
+  roomNumber_starts_with: String
+  roomNumber_not_starts_with: String
+  roomNumber_ends_with: String
+  roomNumber_not_ends_with: String
+  rate: Int
+  rate_not: Int
+  rate_in: [Int!]
+  rate_not_in: [Int!]
+  rate_lt: Int
+  rate_lte: Int
+  rate_gt: Int
+  rate_gte: Int
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  hotel: HotelWhereInput
+  bookings_every: BookingWhereInput
+  bookings_some: BookingWhereInput
+  bookings_none: BookingWhereInput
+  AND: [RoomWhereInput!]
+  OR: [RoomWhereInput!]
+  NOT: [RoomWhereInput!]
+}
+
+input RoomWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  booking(where: BookingSubscriptionWhereInput): BookingSubscriptionPayload
+  guest(where: GuestSubscriptionWhereInput): GuestSubscriptionPayload
+  hotel(where: HotelSubscriptionWhereInput): HotelSubscriptionPayload
+  room(where: RoomSubscriptionWhereInput): RoomSubscriptionPayload
+}

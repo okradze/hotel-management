@@ -1,0 +1,37 @@
+type Hotel {
+    id: ID! @id
+    name: String!
+    email: String! @unique
+    phone: String! @unique
+    password: String!
+    rooms: [Room!]! @relation(name: "RoomToHotel", onDelete: CASCADE)
+    bookings: [Booking!]! @relation(name: "BookingToHotel", onDelete: CASCADE)
+    guests: [Guest!]! @relation(name: "GuestToHotel", onDelete: CASCADE)
+}
+
+type Room {
+    id: ID! @id
+    roomNumber: String!
+    rate: Int!
+    type: String!
+    hotel: Hotel! @relation(name: "RoomToHotel", onDelete: SET_NULL)
+    bookings: [Booking!]! @relation(name: "BookingToRoom", onDelete: CASCADE)
+}
+
+type Booking {
+    id: ID! @id
+    checkIn: DateTime!
+    checkOut: DateTime!
+    color: String!
+    hotel: Hotel! @relation(name: "BookingToHotel", onDelete: SET_NULL)
+    room: Room! @relation(name: "BookingToRoom", onDelete: SET_NULL)
+    guest: Guest! @relation(name: "BookingToGuest", onDelete: SET_NULL)
+}
+
+type Guest {
+    id: ID! @id
+    name: String!
+    phone: String!
+    hotel: Hotel! @relation(name: "GuestToHotel", onDelete: SET_NULL)
+    bookings: [Booking!]! @relation(name: "BookingToGuest", onDelete: CASCADE)
+}
