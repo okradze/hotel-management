@@ -3,6 +3,12 @@ import getHotelId from '../utils/getHotelId'
 import generateToken from '../utils/generateToken'
 import hashPassword from '../utils/hashPassword'
 import setCookie from '../utils/setCookie'
+import {
+    createBookingSchema,
+    createGuestSchema,
+    createHotelSchema,
+    createRoomSchema,
+} from '@hb/common'
 
 const Mutation = {
     logout(parent, args, { request }) {
@@ -41,6 +47,11 @@ const Mutation = {
     createHotel: {
         resolve: async (parent, { data }, { prisma, request }) => {
             try {
+                createHotelSchema.validateSync(data, {
+                    abortEarly: false,
+                    strict: true,
+                })
+
                 const password = await hashPassword(data.password)
 
                 // create hotel
@@ -62,89 +73,115 @@ const Mutation = {
         },
     },
     async createRoom(parent, { data }, { prisma, request }, info) {
-        const hotelId = getHotelId(request)
+        try {
+            createRoomSchema.validateSync(data, {
+                abortEarly: false,
+                strict: true,
+            })
 
-        return prisma.mutation.createRoom(
-            {
-                data: {
-                    ...data,
-                    hotel: {
-                        connect: {
-                            id: hotelId,
+            const hotelId = getHotelId(request)
+
+            return prisma.mutation.createRoom(
+                {
+                    data: {
+                        ...data,
+                        hotel: {
+                            connect: {
+                                id: hotelId,
+                            },
                         },
                     },
                 },
-            },
-            info,
-        )
+                info,
+            )
+        } catch (e) {
+            throw new Error('Unable to create room')
+        }
     },
     async createGuest(parent, { data }, { prisma, request }, info) {
-        const hotelId = getHotelId(request)
+        try {
+            createGuestSchema.validateSync(data, {
+                abortEarly: false,
+                strict: true,
+            })
+            const hotelId = getHotelId(request)
 
-        return prisma.mutation.createGuest(
-            {
-                data: {
-                    ...data,
-                    hotel: {
-                        connect: {
-                            id: hotelId,
+            return prisma.mutation.createGuest(
+                {
+                    data: {
+                        ...data,
+                        hotel: {
+                            connect: {
+                                id: hotelId,
+                            },
                         },
                     },
                 },
-            },
-            info,
-        )
+                info,
+            )
+        } catch (e) {
+            throw new Error('Unable to create guest')
+        }
     },
     async createBooking(parent, { data }, { prisma, request }, info) {
-        const hotelId = getHotelId(request)
+        try {
+            createBookingSchema.validateSync(data, {
+                abortEarly: false,
+                strict: true,
+            })
 
-        const roomExists = await prisma.exists.Room({
-            id: data.room,
-            hotel: {
-                id: hotelId,
-            },
-        })
+            const hotelId = getHotelId(request)
 
-        if (!roomExists) {
-            throw new Error('Room not found')
-        }
+            const roomExists = await prisma.exists.Room({
+                id: data.room,
+                hotel: {
+                    id: hotelId,
+                },
+            })
 
-        const guestExists = await prisma.exists.Guest({
-            id: data.guest,
-            hotel: {
-                id: hotelId,
-            },
-        })
+            if (!roomExists) {
+                throw new Error('Room not found')
+            }
 
-        if (!guestExists) {
-            throw new Error('Guest not found')
-        }
+            const guestExists = await prisma.exists.Guest({
+                id: data.guest,
+                hotel: {
+                    id: hotelId,
+                },
+            })
 
-        return prisma.mutation.createBooking(
-            {
-                data: {
-                    checkIn: data.checkIn,
-                    checkOut: data.checkOut,
-                    color: data.color,
-                    hotel: {
-                        connect: {
-                            id: hotelId,
+            if (!guestExists) {
+                throw new Error('Guest not found')
+            }
+
+            return prisma.mutation.createBooking(
+                {
+                    data: {
+                        checkIn: data.checkIn,
+                        checkOut: data.checkOut,
+                        color: data.color,
+                        hotel: {
+                            connect: {
+                                id: hotelId,
+                            },
                         },
-                    },
-                    room: {
-                        connect: {
-                            id: data.room,
+                        room: {
+                            connect: {
+                                id: data.room,
+                            },
                         },
-                    },
-                    guest: {
-                        connect: {
-                            id: data.guest,
+                        guest: {
+                            connect: {
+                                id: data.guest,
+                            },
                         },
                     },
                 },
-            },
-            info,
-        )
+                info,
+            )
+        } catch (e) {
+            throw new Error('Unable to create booking')
+        }
     },
 }
 

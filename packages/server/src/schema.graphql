@@ -5,6 +5,9 @@ type Query {
     bookings(data: QueryBookingsInput!): [Booking!]!
     guests(data: QueryGuestsInput!): [Guest!]!
     refreshToken: Boolean!
+    roomsCount: Int!
+    guestsCount: Int!
+    revenueData: [Float!]!
 }
 
 type Mutation {

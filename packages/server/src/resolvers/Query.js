@@ -1,8 +1,70 @@
 import getHotelId from '../utils/getHotelId'
 import generateToken from '../utils/generateToken'
 import setCookie from '../utils/setCookie'
+import getDatesFromRange from '../utils/getDatesFromRange'
 
 const Query = {
+    async revenueData(parent, args, { prisma, request }) {
+        const hotelId = getHotelId(request)
+
+        const bookings = await prisma.query.bookings(
+            {
+                where: {
+                    hotel: {
+                        id: hotelId,
+                    },
+                },
+            },
+            `{ room { rate } checkIn checkOut }`,
+        )
+
+        const monthsInYear = 12
+
+        const data = new Array(monthsInYear).fill(0)
+
+        bookings.forEach(({ room, checkIn, checkOut }) => {
+            const dates = getDatesFromRange(checkIn, checkOut)
+
+            dates.forEach(date => {
+                const monthNum = new Date(date).getMonth()
+
+                data[monthNum] = data[monthNum] + room.rate
+            })
+        })
+
+        return data
+    },
+    async roomsCount(parent, args, { prisma, request }) {
+        const hotelId = getHotelId(request)
+
+        const { aggregate } = await prisma.query.roomsConnection(
+            {
+                where: {
+                    hotel: {
+                        id: hotelId,
+                    },
+                },
+            },
+            `{ aggregate {count }}`,
+        )
+        return aggregate.count
+    },
+    async guestsCount(parent, args, { prisma, request }) {
+        const hotelId = getHotelId(request)
+
+        const { aggregate } = await prisma.query.guestsConnection(
+            {
+                where: {
+                    hotel: {
+                        id: hotelId,
+                    },
+                },
+            },
+            `{ aggregate {count }}`,
+        )
+
+        return aggregate.count
+    },
     refreshToken(parent, args, { request }) {
         const hotelId = getHotelId(request)
         const token = generateToken(hotelId)

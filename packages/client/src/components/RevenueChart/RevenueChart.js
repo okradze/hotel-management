@@ -1,14 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
+import gql from 'graphql-tag'
 import { Line } from 'react-chartjs-2'
-import { months } from '../../utils/locale'
+import { useQuery } from '@apollo/react-hooks'
 
-const RevenueChart = ({ chartData }) => {
+const GET_REVENUE_DATA = gql`
+    query {
+        revenueData
+    }
+`
+
+const RevenueChart = () => {
+    const [chartData, setChartData] = useState()
+
+    useQuery(GET_REVENUE_DATA, {
+        onCompleted: handleCompleted,
+    })
+
+    function handleCompleted(data) {
+        setChartData(data.revenueData)
+    }
+
     const data = {
-        labels: months,
+        labels: [
+            'იან',
+            'თებ',
+            'მარ',
+            'აპრ',
+            'მაი',
+            'ივნ',
+            'ივლ',
+            'აგვ',
+            'სექ',
+            'ოქტ',
+            'ნოე',
+            'დეკ',
+        ],
         datasets: [
             {
                 label: 'შემოსავალი',
-                data: chartData,
+                data: chartData || [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                ],
                 pointBorderWidth: 1,
                 pointRadius: 4,
             },
@@ -40,11 +83,9 @@ const RevenueChart = ({ chartData }) => {
         <Line
             id="revenue-chart"
             data={getChartData}
-            height={100}
             options={{
-                responsive: true,
                 legend: {
-                    position: 'bottom',
+                    display: false,
                 },
                 animation: {
                     easing: 'easeInOutBack',
@@ -58,14 +99,23 @@ const RevenueChart = ({ chartData }) => {
                     yAxes: [
                         {
                             ticks: {
-                                fontSize: 16,
+                                fontColor: '#777',
+                                beginAtZero: false,
+                                maxTicksLimit: 6,
+                                padding: 10,
+                                fontSize: 15,
                             },
                         },
                     ],
                     xAxes: [
                         {
+                            gridLines: {
+                                color: 'rgba(255,255,255,0.1)',
+                            },
                             ticks: {
-                                fontSize: 16,
+                                fontColor: '#777',
+                                fontSize: 15,
+                                padding: 10,
                             },
                         },
                     ],
