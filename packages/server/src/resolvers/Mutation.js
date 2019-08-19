@@ -11,15 +11,15 @@ import {
 } from '@hb/common'
 
 const Mutation = {
-    logout(parent, args, { request }) {
-        getHotelId(request)
+    logout(parent, args, { req, res }) {
+        getHotelId({ req })
 
-        request.response.cookie('token', '', {
+        res.cookie('token', '', {
             expires: new Date(0),
         })
         return true
     },
-    async login(parent, { data }, { prisma, request }) {
+    async login(parent, { data }, { prisma, req, res }) {
         // check if user exists with email
 
         const hotel = await prisma.query.hotel({
@@ -40,12 +40,12 @@ const Mutation = {
 
         const token = generateToken(hotel.id)
 
-        setCookie(request, token)
+        setCookie({ res }, token)
 
         return true
     },
     createHotel: {
-        resolve: async (parent, { data }, { prisma, request }) => {
+        resolve: async (parent, { data }, { prisma, req, res }) => {
             try {
                 createHotelSchema.validateSync(data, {
                     abortEarly: false,
@@ -64,7 +64,7 @@ const Mutation = {
 
                 const token = generateToken(hotel.id)
 
-                setCookie(request, token)
+                setCookie({ res }, token)
 
                 return true
             } catch (e) {
@@ -72,14 +72,17 @@ const Mutation = {
             }
         },
     },
-    async createRoom(parent, { data }, { prisma, request }, info) {
+    async createRoom(parent, { data }, { prisma, req }, info) {
         try {
-            createRoomSchema.validateSync(data, {
-                abortEarly: false,
-                strict: true,
-            })
+            createRoomSchema.validateSync(
+                { ...data, roomNumber: Number.parseInt(data.roomNumber, 10) },
+                {
+                    abortEarly: false,
+                    strict: true,
+                },
+            )
 
-            const hotelId = getHotelId(request)
+            const hotelId = getHotelId({ req })
 
             return prisma.mutation.createRoom(
                 {
@@ -95,16 +98,18 @@ const Mutation = {
                 info,
             )
         } catch (e) {
+            console.log(e)
+
             throw new Error('Unable to create room')
         }
     },
-    async createGuest(parent, { data }, { prisma, request }, info) {
+    async createGuest(parent, { data }, { prisma, req }, info) {
         try {
             createGuestSchema.validateSync(data, {
                 abortEarly: false,
                 strict: true,
             })
-            const hotelId = getHotelId(request)
+            const hotelId = getHotelId({ req })
 
             return prisma.mutation.createGuest(
                 {
@@ -123,14 +128,21 @@ const Mutation = {
             throw new Error('Unable to create guest')
         }
     },
-    async createBooking(parent, { data }, { prisma, request }, info) {
+    async createBooking(parent, { data }, { prisma, req }, info) {
         try {
-            createBookingSchema.validateSync(data, {
-                abortEarly: false,
-                strict: true,
-            })
+            createBookingSchema.validateSync(
+                {
+                    ...data,
+                    checkIn: new Date(data.checkIn),
+                    checkOut: new Date(data.checkOut),
+                },
+                {
+                    abortEarly: false,
+                    strict: true,
+                },
+            )
 
-            const hotelId = getHotelId(request)
+            const hotelId = getHotelId({ req })
 
             const roomExists = await prisma.exists.Room({
                 id: data.room,

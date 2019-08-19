@@ -19,12 +19,14 @@
         "nodemon": "^1.19.1"
     },
     "dependencies": {
-        "@hb/common": "1.0.0",
         "@babel/polyfill": "^7.4.4",
+        "@hb/common": "1.0.0",
+        "apollo-server-express": "^2.8.1",
         "bcryptjs": "^2.4.3",
         "cookie-parser": "^1.4.4",
-        "cors": "^2.8.5",
-        "graphql-yoga": "^1.18.1",
+        "express": "^4.17.1",
+        "graphql": "^14.4.2",
+        "graphql-import": "^0.7.1",
         "helmet": "^3.19.0",
         "jsonwebtoken": "^8.5.1",
         "prisma-binding": "^2.3.15"

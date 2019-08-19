@@ -5,6 +5,7 @@ const GET_DASHBOARD_DATA = gql`
         $startDate: String!
         $bookingsOrderBy: BookingOrderByInput
         $roomsOrderBy: RoomOrderByInput
+        $roomsFirst: Int!
     ) {
         bookings(data: { startDate: $startDate, orderBy: $bookingsOrderBy }) {
             id
@@ -20,7 +21,7 @@ const GET_DASHBOARD_DATA = gql`
             checkIn
             checkOut
         }
-        rooms(data: { orderBy: $roomsOrderBy }) {
+        rooms(data: { orderBy: $roomsOrderBy, first: $roomsFirst }) {
             id
             roomNumber
         }

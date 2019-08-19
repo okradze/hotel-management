@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import DateRangePickerContext from './Context'
 import DatePicker from './DatePicker'

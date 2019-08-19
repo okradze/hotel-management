@@ -1,24 +1,8 @@
-.loader-full {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .loader {
-        --light-grey: #fff;
-    }
-}
-
-.loader-center {
+.loader-wrapper {
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 0;
-    .loader {
-        --light-grey: #fff;
-    }
 }
 
 .loader,

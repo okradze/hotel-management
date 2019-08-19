@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import DateRangePickerContext from './Context'
 import Day from './Day'
 import { getWeeksForMonth } from './utils'
-import Loader from '../Loader'
+import withLoader from '../Loader'
 import DashboardContext from '../Dashboard/DashboardContext'
 
 const Month = () => {
@@ -15,24 +15,22 @@ const Month = () => {
 
     const weeks = getWeeksForMonth(current.getMonth(), current.getFullYear())
 
-    return roomId ? (
-        loading ? (
-            <div className="loader-center">
-                <Loader />
+    const MonthWithLoader = withLoader(() =>
+        weeks.map((week, index) => (
+            <div key={index} className="DatePicker__week">
+                {week.map((date, i) => (
+                    <Day
+                        dayType={dayClass(date, filteredBookings)}
+                        date={date}
+                        key={i}
+                    />
+                ))}
             </div>
-        ) : (
-            weeks.map((week, index) => (
-                <div key={index} className="DatePicker__week">
-                    {week.map((date, i) => (
-                        <Day
-                            dayType={dayClass(date, filteredBookings)}
-                            date={date}
-                            key={i}
-                        />
-                    ))}
-                </div>
-            ))
-        )
+        )),
+    )
+
+    return roomId ? (
+        <MonthWithLoader isLoading={loading} />
     ) : (
         <div style={{ textAlign: 'center', padding: '30px 0' }}>
             აირჩიეთ ოთახი

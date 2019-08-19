@@ -4,8 +4,8 @@ import setCookie from '../utils/setCookie'
 import getDatesFromRange from '../utils/getDatesFromRange'
 
 const Query = {
-    async revenueData(parent, args, { prisma, request }) {
-        const hotelId = getHotelId(request)
+    async revenueData(parent, args, { prisma, req, res }) {
+        const hotelId = getHotelId({ req, res })
 
         const bookings = await prisma.query.bookings(
             {
@@ -34,8 +34,8 @@ const Query = {
 
         return data
     },
-    async roomsCount(parent, args, { prisma, request }) {
-        const hotelId = getHotelId(request)
+    async roomsCount(parent, args, { prisma, req, res }) {
+        const hotelId = getHotelId({ req, res })
 
         const { aggregate } = await prisma.query.roomsConnection(
             {
@@ -49,8 +49,8 @@ const Query = {
         )
         return aggregate.count
     },
-    async guestsCount(parent, args, { prisma, request }) {
-        const hotelId = getHotelId(request)
+    async guestsCount(parent, args, { prisma, req, res }) {
+        const hotelId = getHotelId({ req, res })
 
         const { aggregate } = await prisma.query.guestsConnection(
             {
@@ -65,11 +65,11 @@ const Query = {
 
         return aggregate.count
     },
-    refreshToken(parent, args, { request }) {
-        const hotelId = getHotelId(request)
+    refreshToken(parent, args, { req, res }) {
+        const hotelId = getHotelId({ req, res })
         const token = generateToken(hotelId)
 
-        setCookie(request, token)
+        setCookie({ req, res }, token)
 
         return true
     },
@@ -78,10 +78,10 @@ const Query = {
         {
             data: { startDate, orderBy, roomId },
         },
-        { prisma, request },
+        { prisma, req, res },
         info,
     ) {
-        const hotelId = getHotelId(request)
+        const hotelId = getHotelId({ req, res })
 
         const endDate = new Date(
             new Date(startDate).getFullYear(),
@@ -137,37 +137,72 @@ const Query = {
 
         return prisma.query.bookings(opArgs, info)
     },
-    rooms(parent, { data }, { prisma, request }, info) {
-        const hotelId = getHotelId(request)
+    rooms(
+        parent,
+        {
+            data: { query, orderBy, first },
+        },
+        { prisma, req, res },
+        info,
+    ) {
+        const hotelId = getHotelId({ req, res })
 
-        return prisma.query.rooms(
-            {
-                where: {
-                    type_contains: data.query,
-                    hotel: {
-                        id: hotelId,
-                    },
+        const opArgs = {
+            where: {
+                hotel: {
+                    id: hotelId,
                 },
-                orderBy: data.orderBy,
             },
-            info,
-        )
+        }
+
+        if (query) {
+            opArgs.where.OR = [
+                {
+                    type_contains: query,
+                },
+                {
+                    roomNumber_contains: query,
+                },
+            ]
+        }
+
+        if (orderBy) {
+            opArgs.orderBy = orderBy
+        }
+        if (first) {
+            opArgs.first = first
+        }
+
+        return prisma.query.rooms(opArgs, info)
     },
-    guests(parent, { data }, { prisma, request }, info) {
-        const hotelId = getHotelId(request)
+    guests(
+        parent,
+        {
+            data: { query, orderBy },
+        },
+        { prisma, req, res },
+        info,
+    ) {
+        const hotelId = getHotelId({ req, res })
 
-        return prisma.query.guests(
-            {
-                where: {
-                    name_contains: data.query,
-                    hotel: {
-                        id: hotelId,
-                    },
+        const opArgs = {
+            where: {
+                hotel: {
+                    id: hotelId,
                 },
-                orderBy: data.orderBy,
             },
-            info,
-        )
+            first: 6,
+        }
+
+        if (query) {
+            opArgs.where.name_contains = query
+        }
+
+        if (orderBy) {
+            opArgs.orderBy = orderBy
+        }
+
+        return prisma.query.guests(opArgs, info)
     },
 }
 

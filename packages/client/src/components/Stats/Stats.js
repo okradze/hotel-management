@@ -30,10 +30,6 @@ const Stats = () => {
                 </div>
                 <TotalComponent text="სტუმარი" QUERY={GUESTS_COUNT} />
                 <TotalComponent text="ოთახი" QUERY={ROOMS_COUNT} />
-                {/* <TotalComponent
-                            className="Stats__TotalRevenue"
-                            text="შემოსავალი"
-                        /> */}
 
                 <div className="Stats__chart chart">
                     <header className="chart__header">

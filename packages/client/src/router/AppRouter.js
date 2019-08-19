@@ -9,9 +9,10 @@ import PrivateRoute from './PrivateRoute'
 import NotFound from './NotFound'
 import AuthContext from '../context/AuthContext'
 import Auth from '../components/Auth'
+import Header from '../components/Header'
 
 const httpLink = createHttpLink({
-    uri: 'http://localhost:4000',
+    uri: 'http://localhost:4000/graphql',
     credentials: 'include',
 })
 
@@ -32,21 +33,26 @@ const AppRouter = () => {
                     <React.Suspense fallback={<p />}>
                         <Switch>
                             <Route path="/" component={Auth} exact />
-                            <PrivateRoute
-                                path="/dashboard"
-                                component={Dashboard}
-                                exact
-                            />
                             <PublicRoute
                                 path="/login"
                                 component={LoginPage}
                                 exact
                             />
-                            <PrivateRoute
-                                path="/stats"
-                                component={Stats}
-                                exact
-                            />
+                            <>
+                                <Header />
+                                <PrivateRoute
+                                    path="/dashboard"
+                                    component={Dashboard}
+                                    exact
+                                />
+
+                                <PrivateRoute
+                                    path="/stats"
+                                    component={Stats}
+                                    exact
+                                />
+                            </>
+
                             <NotFound />
                         </Switch>
                     </React.Suspense>

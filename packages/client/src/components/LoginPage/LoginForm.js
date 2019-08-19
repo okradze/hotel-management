@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { withRouter } from 'react-router-dom'
 import { Context } from '../../context/AuthContext'
-import Loader from '../Loader/Loader'
+import withLoader from '../Loader'
 import { LOGIN } from './gql'
 import Input from '../Input'
 
@@ -46,6 +46,8 @@ const LoginForm = ({ history, setIsLogin }) => {
         }
     }
 
+    const ButtonWithLoader = withLoader(() => 'შესვლა')
+
     return (
         <div className="LoginPage-wrapper">
             <div className="LoginPage-form">
@@ -71,13 +73,7 @@ const LoginForm = ({ history, setIsLogin }) => {
                         </p>
                     )}
                     <button type="submit" className="button button--secondary">
-                        {loading ? (
-                            <>
-                                <Loader />
-                            </>
-                        ) : (
-                            'შესვლა'
-                        )}
+                        <ButtonWithLoader isLoading={loading} />
                     </button>
                 </form>
                 <div>

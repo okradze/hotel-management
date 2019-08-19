@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import './AutoCompleteInput.scss'
 import PlusSvg from '../../svg/Plus'
-import Loader from '../Loader'
+import withLoader from '../Loader'
 
 const AutoCompleteInput = ({
     setValue,
@@ -16,6 +16,30 @@ const AutoCompleteInput = ({
     renderItem,
 }) => {
     const [isOpen, setIsOpen] = useState(false)
+
+    const AutoCompleteWithLoader = withLoader(({ data }) =>
+        data.map((item, index) => (
+            <li className="AutoComplete__item" key={index}>
+                <span
+                    role="button"
+                    onKeyPress={e => {
+                        if (e.which === 13) {
+                            handleChoose(item)
+                            setIsOpen(false)
+                        }
+                    }}
+                    tabIndex="0"
+                    onClick={() => {
+                        handleChoose(item)
+                        setIsOpen(false)
+                    }}
+                    className="AutoComplete__button"
+                >
+                    {renderItem(item)}
+                </span>
+            </li>
+        )),
+    )
 
     return (
         <OutsideClickHandler
@@ -50,33 +74,13 @@ const AutoCompleteInput = ({
                 </span>
                 {isOpen && (
                     <ul className="AutoComplete">
-                        {loading ? (
-                            <li className="AutoComplete__loading">
-                                <Loader />
-                            </li>
-                        ) : (
-                            data.map((item, index) => (
-                                <li className="AutoComplete__item" key={index}>
-                                    <span
-                                        role="button"
-                                        onKeyPress={e => {
-                                            if (e.which === 13) {
-                                                handleChoose(item)
-                                                setIsOpen(false)
-                                            }
-                                        }}
-                                        tabIndex="0"
-                                        onClick={() => {
-                                            handleChoose(item)
-                                            setIsOpen(false)
-                                        }}
-                                        className="AutoComplete__button"
-                                    >
-                                        {renderItem(item)}
-                                    </span>
-                                </li>
-                            ))
-                        )}
+                        <AutoCompleteWithLoader
+                            styles={{
+                                padding: '10px 0',
+                            }}
+                            isLoading={loading}
+                            data={data}
+                        />
                     </ul>
                 )}
             </div>

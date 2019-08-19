@@ -2,11 +2,12 @@ import React, { useContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { Context } from '../../context/AuthContext'
-import Loader from '../Loader'
+import withLoader from '../Loader'
 import REFRESH_TOKEN from './gql'
 
 const Auth = ({ history }) => {
     const { setIsAuth } = useContext(Context)
+
     useQuery(REFRESH_TOKEN, {
         onError: () => {
             history.push('/login')
@@ -20,9 +21,18 @@ const Auth = ({ history }) => {
         }
     }
 
+    const AuthWithLoader = withLoader(Auth)
+
     return (
-        <div className="loader-full">
-            <Loader />
+        <div
+            style={{
+                minHeight: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <AuthWithLoader isLoading />
         </div>
     )
 }

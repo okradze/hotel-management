@@ -33,13 +33,10 @@ const Dashboard = () => {
         mergeBookingsAndTemp()
     }, [tempBooking])
 
-    useEffect(() => {
-        mergeBookingsAndTemp()
-    }, [bookings])
-
     const { loading, refetch } = useQuery(GET_DASHBOARD_DATA, {
         variables: {
             roomsOrderBy: 'roomNumber_ASC',
+            roomsFirst: 5,
             startDate: new Date(
                 current.getFullYear(),
                 current.getMonth(),

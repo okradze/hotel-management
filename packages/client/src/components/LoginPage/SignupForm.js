@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { withRouter } from 'react-router-dom'
 import { createHotelSchema } from '@hb/common'
 import { Context } from '../../context/AuthContext'
-import Loader from '../Loader/Loader'
+import withLoader from '../Loader'
 import { SIGNUP } from './gql'
 import './LoginPage.scss'
 import handleValidate from '../../utils/handleValidate'
@@ -107,6 +107,8 @@ const SignupForm = ({ history, setIsLogin }) => {
         }
     }
 
+    const ButtonWithLoader = withLoader(() => 'რეგისტრაცია')
+
     return (
         <div className="LoginPage-wrapper">
             <div className="LoginPage-form">
@@ -148,13 +150,7 @@ const SignupForm = ({ history, setIsLogin }) => {
                     />
 
                     <button type="submit" className="button button--secondary">
-                        {loading ? (
-                            <div>
-                                <Loader />
-                            </div>
-                        ) : (
-                            'რეგისტრაცია'
-                        )}
+                        <ButtonWithLoader isLoading={loading} />
                     </button>
                 </form>
                 <div>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Loader from '../Loader'
+import withLoader from '../Loader'
 import './Table.scss'
 import { renderMonthAndYear, handleNext, handleBack } from '../../utils/locale'
 import DashboardContext from '../Dashboard/DashboardContext'
@@ -110,6 +110,8 @@ const Table = () => {
         return rows
     }
 
+    const TableWithLoader = withLoader(createRows)
+
     return (
         <div className="table-wrapper">
             <div className="table-header">
@@ -151,13 +153,10 @@ const Table = () => {
                     <thead>
                         <tr>{createHead()}</tr>
                     </thead>
-                    <tbody>{createRows()}</tbody>
+                    <tbody>
+                        <TableWithLoader isLoading={loading} />
+                    </tbody>
                 </table>
-                {loading && (
-                    <div className="loader-center">
-                        <Loader />
-                    </div>
-                )}
             </div>
         </div>
     )

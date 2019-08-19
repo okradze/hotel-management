@@ -7,7 +7,7 @@ import AutoCompleteInput from '../AutoCompleteInput'
 import ColorPicker from '../ColorPicker'
 import GuestModal from './GuestModal'
 import RoomModal from './RoomModal'
-import Loader from '../Loader'
+import withLoader from '../Loader'
 import DashboardContext from '../Dashboard/DashboardContext'
 import { runAfterDatePick } from './utils'
 import './BookForm.scss'
@@ -131,6 +131,7 @@ const BookForm = ({ refetchDashboardData }) => {
                 query: GET_GUESTS,
                 variables: {
                     query: value,
+                    first: 6,
                 },
                 fetchPolicy: 'no-cache',
             })
@@ -147,27 +148,29 @@ const BookForm = ({ refetchDashboardData }) => {
         }
     }
     async function handleRoomInput(value) {
-        if (value.length > 2) {
-            setRoomsLoading(true)
-            const { data } = await client.query({
-                query: GET_ROOMS,
-                variables: {
-                    query: value,
+        setRoomsLoading(true)
+
+        const { data } = await client.query({
+            query: GET_ROOMS,
+            variables: {
+                query: value,
+                first: 6,
+            },
+            fetchPolicy: 'no-cache',
+        })
+        if (data.rooms.length > 0) {
+            setRooms(data.rooms)
+        } else {
+            setRooms([
+                {
+                    type: 'ოთახი არ მოიძებნა',
                 },
-                fetchPolicy: 'no-cache',
-            })
-            if (data.rooms.length > 0) {
-                setRooms(data.rooms)
-            } else {
-                setRooms([
-                    {
-                        type: 'ოთახი არ მოიძებნა',
-                    },
-                ])
-            }
-            setRoomsLoading(false)
+            ])
         }
+        setRoomsLoading(false)
     }
+
+    const ButtonWithLoader = withLoader(() => 'დაჯავშნა')
 
     return (
         <div className="container">
@@ -257,7 +260,7 @@ const BookForm = ({ refetchDashboardData }) => {
                     type="submit"
                     className="button button--primary BookForm__button"
                 >
-                    {bookingLoading ? <Loader /> : 'დაჯავშნა'}
+                    <ButtonWithLoader isLoading={bookingLoading} />
                 </button>
             </form>
             <GuestModal
@@ -274,4 +277,4 @@ const BookForm = ({ refetchDashboardData }) => {
     )
 }
 
-export default BookForm
+export default React.memo(BookForm)

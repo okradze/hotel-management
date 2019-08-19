@@ -59,11 +59,13 @@ type Booking {
 input QueryRoomsInput {
     orderBy: RoomOrderByInput
     query: String
+    first: Int!
 }
 
 input QueryGuestsInput {
     orderBy: GuestOrderByInput
     query: String
+    first: Int
 }
 
 input QueryBookingsInput {

@@ -9,10 +9,6 @@
     cursor: pointer;
     transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
-    .loader {
-        font-size: 10px;
-    }
-
     &--primary {
         color: var(--white);
         background-color: rgba(var(--primary), 0.9);

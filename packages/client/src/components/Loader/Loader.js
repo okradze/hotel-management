@@ -1,6 +1,16 @@
 import React from 'react'
 import './Loader.scss'
 
-const Loader = () => <div className="loader" />
+const withLoader = Component => ({ isLoading, children, styles, ...props }) => {
+    if (isLoading) {
+        return (
+            <div style={styles} className="loader-wrapper">
+                <div className="loader" />
+            </div>
+        )
+    }
 
-export default Loader
+    return <Component {...props}>{children}</Component>
+}
+
+export default withLoader

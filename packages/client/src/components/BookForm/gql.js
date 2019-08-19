@@ -10,8 +10,8 @@ export const GET_GUESTS = gql`
 `
 
 export const GET_ROOMS = gql`
-    query Rooms($query: String, $orderBy: RoomOrderByInput) {
-        rooms(data: { query: $query, orderBy: $orderBy }) {
+    query Rooms($query: String, $orderBy: RoomOrderByInput, $first: Int!) {
+        rooms(data: { query: $query, orderBy: $orderBy, first: $first }) {
             id
             rate
             roomNumber

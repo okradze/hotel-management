@@ -1,35 +1,38 @@
 import '@babel/polyfill/noConflict'
-import { GraphQLServer } from 'graphql-yoga'
+import { ApolloServer } from 'apollo-server-express'
+import express from 'express'
+import { importSchema } from 'graphql-import'
 import helmet from 'helmet'
-import resolvers from './resolvers'
-import prisma from './prisma'
 import cookieParser from 'cookie-parser'
+import resolvers from './resolvers/index'
+import prisma from './prisma'
 
-const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
+const app = express()
+
+app.use(helmet())
+app.use(cookieParser())
+app.disable('x-powered-by')
+
+const server = new ApolloServer({
+    typeDefs: importSchema('./src/schema.graphql'),
     resolvers,
-    context(request) {
-        return {
-            prisma,
-            request,
-        }
+    context: ({ req, res }) => ({
+        prisma,
+        req,
+        res,
+    }),
+})
+
+server.applyMiddleware({
+    app,
+    cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
     },
 })
 
-server.express.use(helmet())
-server.express.use(cookieParser())
+const PORT = process.env.PORT || 4000
 
-server.start(
-    {
-        cors: {
-            credentials: true,
-            origin: 'http://localhost:3000',
-        },
-        port: process.env.PORT || 4000,
-        uploads: false,
-        // https: true,
-    },
-    () => {
-        console.log('Server is up')
-    },
-)
+app.listen(PORT, () => {
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+})
