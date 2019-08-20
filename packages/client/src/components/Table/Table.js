@@ -1,12 +1,19 @@
 import React, { useContext } from 'react'
+import TableHeader from './TableHeader'
+import DashboardContext from '../Dashboard/DashboardContext'
 import withLoader from '../Loader'
 import './Table.scss'
-import { renderMonthAndYear, handleNext, handleBack } from '../../utils/locale'
-import DashboardContext from '../Dashboard/DashboardContext'
+
+Number.prototype.pad = function(size) {
+    var s = String(this)
+    while (s.length < (size || 2)) {
+        s = '0' + s
+    }
+    return s
+}
 
 const Table = () => {
-    const startDay = new Date(new Date().setHours(0, 0, 0, 0))
-    const { current, setCurrent, bookings, rooms, loading } = useContext(
+    const { current, setCurrent, tempBooking, data, loading } = useContext(
         DashboardContext,
     )
 
@@ -35,8 +42,26 @@ const Table = () => {
         )
     }
 
-    function createCells(roomId) {
+    function createCells(bookings, roomId) {
         const cells = []
+
+        function checkIfHeld(currentDateString, checkIn, checkOut) {
+            return currentDateString >= checkIn && currentDateString <= checkOut
+        }
+
+        function tempBookingMatch(currentDateString, tempRoomId) {
+            if (
+                checkIfHeld(
+                    currentDateString,
+                    tempBooking.checkIn,
+                    tempBooking.checkOut,
+                ) &&
+                roomId === tempRoomId
+            ) {
+                return tempBooking
+            }
+            return undefined
+        }
 
         for (let i = 1; i <= daysInMonth; i++) {
             // current cell date in ISO 8601
@@ -46,15 +71,20 @@ const Table = () => {
                 i,
             ).toISOString()
 
-            const guestIndex = bookings.findIndex(
-                ({ checkIn, checkOut, room }) =>
-                    currentDateString >= checkIn &&
-                    currentDateString <= checkOut &&
-                    roomId === room.id,
+            // check if this cell is held
+            let booking = bookings.find(({ checkIn, checkOut }) =>
+                checkIfHeld(currentDateString, checkIn, checkOut),
             )
+            // if temporary booking is there
+            if (!booking && tempBooking) {
+                booking = tempBookingMatch(
+                    currentDateString,
+                    tempBooking.room.id,
+                )
+            }
 
-            if (guestIndex > -1) {
-                const { guest, color } = bookings[guestIndex]
+            if (booking) {
+                const { guest, color } = booking
 
                 if (guest) {
                     cells.push(
@@ -96,13 +126,13 @@ const Table = () => {
     function createRows() {
         const rows = []
 
-        for (let i = 0; i < rooms.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             rows.push(
                 <tr key={i}>
                     <th key={i} className="table-sidebar-th">
-                        {Number.parseInt(rooms[i].roomNumber, 10).pad(2)}
+                        {data[i].roomNumber.pad(2)}
                     </th>
-                    {createCells(rooms[i].id)}
+                    {createCells(data[i].bookings, data[i].id)}
                 </tr>,
             )
         }
@@ -114,40 +144,7 @@ const Table = () => {
 
     return (
         <div className="table-wrapper">
-            <div className="table-header">
-                {current >=
-                    new Date(
-                        startDay.getFullYear(),
-                        startDay.getMonth() + 1,
-                        1,
-                    ) && (
-                    <span
-                        tabIndex="0"
-                        role="button"
-                        onKeyPress={e => {
-                            if (e.which === 13) {
-                                handleBack(current, setCurrent)
-                            }
-                        }}
-                        onClick={() => handleBack(current, setCurrent)}
-                        className="triangle triangle--left table-header__triangle--left"
-                    />
-                )}
-                <div className="table-header__date">
-                    {renderMonthAndYear(current)}
-                </div>
-                <span
-                    tabIndex="0"
-                    role="button"
-                    onKeyPress={e => {
-                        if (e.which === 13) {
-                            handleNext(current, setCurrent)
-                        }
-                    }}
-                    onClick={() => handleNext(current, setCurrent)}
-                    className="triangle triangle--right table-header__triangle--right"
-                />
-            </div>
+            <TableHeader current={current} setCurrent={setCurrent} />
             <div id="table-scroll" className="table-scroll">
                 <table>
                     <thead>

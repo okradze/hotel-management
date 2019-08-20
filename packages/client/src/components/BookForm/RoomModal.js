@@ -4,11 +4,11 @@ import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { createRoomSchema } from '@hb/common'
 import handleValidate from '../../utils/handleValidate'
-import Loader from '../Loader'
+import withLoader from '../Loader'
 import Input from '../Input'
 
 const CREATE_ROOM = gql`
-    mutation CreateRoom($roomNumber: String!, $rate: Int!, $type: String!) {
+    mutation CreateRoom($roomNumber: Int!, $rate: Int!, $type: String!) {
         createRoom(
             data: { roomNumber: $roomNumber, rate: $rate, type: $type }
         ) {
@@ -23,7 +23,7 @@ const CREATE_ROOM = gql`
 Modal.setAppElement('#root')
 
 const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
-    const [roomNumber, setRoomNumber] = useState('1')
+    const [roomNumber, setRoomNumber] = useState(1)
     const [rate, setRate] = useState(1)
     const [type, setType] = useState('')
     const [errors, setErrors] = useState({
@@ -35,7 +35,7 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
     const [createRoom, { loading }] = useMutation(CREATE_ROOM, {
         variables: {
             roomNumber,
-            rate: Number.parseInt(rate, 10),
+            rate,
             type,
         },
         onCompleted: handleComplete,
@@ -46,8 +46,8 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
         try {
             createRoomSchema.validateSync(
                 {
-                    roomNumber: Number.parseInt(roomNumber, 10),
-                    rate: Number.parseInt(rate, 10),
+                    roomNumber,
+                    rate,
                     type,
                 },
                 {
@@ -58,12 +58,14 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
             const { data } = await createRoom()
             handleChoose(data.createRoom)
         } catch (e) {
-            e.inner.forEach(({ path, message }) => {
-                setErrors(prevState => ({
-                    ...prevState,
-                    [path]: [message],
-                }))
-            })
+            if (e.inner) {
+                e.inner.forEach(({ path, message }) => {
+                    setErrors(prevState => ({
+                        ...prevState,
+                        [path]: [message],
+                    }))
+                })
+            }
         }
     }
 
@@ -72,6 +74,8 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
             setModalRoomIsOpen(false)
         }
     }
+
+    const ButtonWithLoader = withLoader(() => 'დამატება')
 
     return (
         <Modal
@@ -86,7 +90,7 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
                     value={roomNumber}
                     onChange={e =>
                         handleValidate(
-                            e.target.value,
+                            Number.parseInt(e.target.value, 10),
                             setRoomNumber,
                             'roomNumber',
                             setErrors,
@@ -103,7 +107,7 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
                     value={rate}
                     onChange={e =>
                         handleValidate(
-                            e.target.value,
+                            Number.parseInt(e.target.value, 10),
                             setRate,
                             'rate',
                             setErrors,
@@ -137,7 +141,7 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
                 />
 
                 <button type="submit" className="button button--primary">
-                    {loading ? <Loader /> : 'დამატება'}
+                    <ButtonWithLoader isLoading={loading} />
                 </button>
             </form>
         </Modal>

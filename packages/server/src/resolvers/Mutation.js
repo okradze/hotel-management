@@ -74,13 +74,10 @@ const Mutation = {
     },
     async createRoom(parent, { data }, { prisma, req }, info) {
         try {
-            createRoomSchema.validateSync(
-                { ...data, roomNumber: Number.parseInt(data.roomNumber, 10) },
-                {
-                    abortEarly: false,
-                    strict: true,
-                },
-            )
+            createRoomSchema.validateSync(data, {
+                abortEarly: false,
+                strict: true,
+            })
 
             const hotelId = getHotelId({ req })
 
@@ -98,8 +95,6 @@ const Mutation = {
                 info,
             )
         } catch (e) {
-            console.log(e)
-
             throw new Error('Unable to create room')
         }
     },

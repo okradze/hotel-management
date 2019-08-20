@@ -1,29 +1,26 @@
 import gql from 'graphql-tag'
 
 const GET_DASHBOARD_DATA = gql`
-    query(
-        $startDate: String!
-        $bookingsOrderBy: BookingOrderByInput
-        $roomsOrderBy: RoomOrderByInput
-        $roomsFirst: Int!
-    ) {
-        bookings(data: { startDate: $startDate, orderBy: $bookingsOrderBy }) {
-            id
-            guest {
-                name
-                phone
-            }
-            color
-            room {
-                id
-                roomNumber
-            }
-            checkIn
-            checkOut
-        }
-        rooms(data: { orderBy: $roomsOrderBy, first: $roomsFirst }) {
+    query($startDate: String!, $first: Int!, $skip: Int!) {
+        dashboardData(
+            data: { startDate: $startDate, first: $first, skip: $skip }
+        ) {
             id
             roomNumber
+            bookings {
+                id
+                guest {
+                    name
+                    phone
+                }
+                color
+                room {
+                    id
+                    roomNumber
+                }
+                checkIn
+                checkOut
+            }
         }
     }
 `

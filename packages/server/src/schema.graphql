@@ -8,6 +8,7 @@ type Query {
     roomsCount: Int!
     guestsCount: Int!
     revenueData: [Float!]!
+    dashboardData(data: QueryDashboardData!): [Room!]!
 }
 
 type Mutation {
@@ -31,7 +32,7 @@ type Hotel {
 
 type Room {
     id: ID!
-    roomNumber: String!
+    roomNumber: Int!
     rate: Int!
     type: String!
     hotel: Hotel!
@@ -56,6 +57,12 @@ type Booking {
     color: String!
 }
 
+input QueryDashboardData {
+    startDate: String!
+    first: Int!
+    skip: Int!
+}
+
 input QueryRoomsInput {
     orderBy: RoomOrderByInput
     query: String
@@ -72,6 +79,8 @@ input QueryBookingsInput {
     startDate: String!
     orderBy: BookingOrderByInput
     roomId: ID
+    minRoomNumber: Int!
+    maxRoomNumber: Int!
 }
 
 input LoginHotelInput {
@@ -87,7 +96,7 @@ input CreateHotelInput {
 }
 
 input CreateRoomInput {
-    roomNumber: String!
+    roomNumber: Int!
     rate: Int!
     type: String!
 }

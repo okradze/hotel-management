@@ -1,54 +1,35 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import BookForm from '../BookForm'
 import Table from '../Table'
 import DashboardContext from './DashboardContext'
 import GET_DASHBOARD_DATA from './gql'
 
-Number.prototype.pad = function(size) {
-    var s = String(this)
-    while (s.length < (size || 2)) {
-        s = '0' + s
-    }
-    return s
-}
-
 const Dashboard = () => {
     const [current, setCurrent] = useState(new Date())
-    const [bookings, setBookings] = useState([])
-    const [rooms, setRooms] = useState([])
-
+    const [data, setData] = useState([])
     const [tempBooking, setTempBooking] = useState()
-
-    function mergeBookingsAndTemp() {
-        if (tempBooking) {
-            setBookings(prevState => [
-                ...prevState.filter(booking => booking.guest),
-                tempBooking,
-            ])
-        }
-    }
-
-    useEffect(() => {
-        mergeBookingsAndTemp()
-    }, [tempBooking])
+    const [paginationData, setPaginationData] = useState({
+        first: 20,
+        skip: 0,
+        text: '1 - 20',
+    })
 
     const { loading, refetch } = useQuery(GET_DASHBOARD_DATA, {
         variables: {
-            roomsOrderBy: 'roomNumber_ASC',
-            roomsFirst: 5,
             startDate: new Date(
                 current.getFullYear(),
                 current.getMonth(),
                 1,
             ).toISOString(),
+            first: paginationData.first,
+            skip: paginationData.skip,
         },
         onCompleted: handleCompleted,
     })
 
-    function handleCompleted(data) {
-        setBookings(data.bookings)
-        setRooms(data.rooms)
+    function handleCompleted({ dashboardData }) {
+        setData(dashboardData)
     }
 
     return (
@@ -57,10 +38,11 @@ const Dashboard = () => {
                 value={{
                     current,
                     setCurrent,
-                    bookings,
-                    setBookings,
+                    paginationData,
+                    setPaginationData,
+                    tempBooking,
                     setTempBooking,
-                    rooms,
+                    data,
                     loading,
                 }}
             >

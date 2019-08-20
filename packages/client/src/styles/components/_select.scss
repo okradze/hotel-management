@@ -1,0 +1,58 @@
+.select {
+    position: relative;
+    display: inline-block;
+
+    button {
+        color: rgba(var(--dark), 1);
+        cursor: pointer;
+    }
+
+    &__button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem 2rem;
+        background-color: var(--light-grey);
+        border: none;
+        border-radius: var(--border-radius);
+
+        span {
+            margin-right: 1rem;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            cursor: pointer;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0.7rem 0.7rem 0 0.7rem;
+            border-color: rgba(var(--secondary), 1) transparent transparent
+                transparent;
+        }
+    }
+
+    &__list-wrapper {
+        width: 100%;
+        position: absolute;
+        top: calc(100% + 3px);
+        left: 0;
+        background-color: var(--light-grey);
+        border-radius: var(--border-radius);
+        z-index: 8;
+    }
+
+    &__list {
+        list-style: none;
+    }
+
+    &__item {
+        button {
+            padding: 1rem 2rem;
+            width: 100%;
+            text-align: start;
+        }
+    }
+}

@@ -4,8 +4,32 @@ import setCookie from '../utils/setCookie'
 import getDatesFromRange from '../utils/getDatesFromRange'
 
 const Query = {
-    async revenueData(parent, args, { prisma, req, res }) {
-        const hotelId = getHotelId({ req, res })
+    async dashboardData(
+        parent,
+        {
+            data: { startDate, skip, first },
+        },
+        { prisma, req },
+        info,
+    ) {
+        const hotelId = getHotelId({ req })
+
+        return prisma.query.rooms(
+            {
+                where: {
+                    hotel: {
+                        id: hotelId,
+                    },
+                },
+                orderBy: 'roomNumber_ASC',
+                first,
+                skip,
+            },
+            info,
+        )
+    },
+    async revenueData(parent, args, { prisma, req }) {
+        const hotelId = getHotelId({ req })
 
         const bookings = await prisma.query.bookings(
             {
@@ -34,8 +58,8 @@ const Query = {
 
         return data
     },
-    async roomsCount(parent, args, { prisma, req, res }) {
-        const hotelId = getHotelId({ req, res })
+    async roomsCount(parent, args, { prisma, req }) {
+        const hotelId = getHotelId({ req })
 
         const { aggregate } = await prisma.query.roomsConnection(
             {
@@ -49,8 +73,8 @@ const Query = {
         )
         return aggregate.count
     },
-    async guestsCount(parent, args, { prisma, req, res }) {
-        const hotelId = getHotelId({ req, res })
+    async guestsCount(parent, args, { prisma, req }) {
+        const hotelId = getHotelId({ req })
 
         const { aggregate } = await prisma.query.guestsConnection(
             {
@@ -66,7 +90,7 @@ const Query = {
         return aggregate.count
     },
     refreshToken(parent, args, { req, res }) {
-        const hotelId = getHotelId({ req, res })
+        const hotelId = getHotelId({ req })
         const token = generateToken(hotelId)
 
         setCookie({ req, res }, token)
@@ -76,63 +100,20 @@ const Query = {
     bookings(
         parent,
         {
-            data: { startDate, orderBy, roomId },
+            data: { orderBy },
         },
-        { prisma, req, res },
+        { prisma, req },
         info,
     ) {
-        const hotelId = getHotelId({ req, res })
-
-        const endDate = new Date(
-            new Date(startDate).getFullYear(),
-            new Date(startDate).getMonth() + 1,
-            1,
-        ).toISOString()
+        const hotelId = getHotelId({ req })
 
         const opArgs = {
             where: {
-                OR: [
-                    {
-                        AND: [
-                            {
-                                checkIn_gte: startDate,
-                            },
-                            {
-                                checkIn_lte: endDate,
-                            },
-                        ],
-                    },
-                    {
-                        AND: [
-                            {
-                                checkOut_gte: startDate,
-                            },
-                            {
-                                checkOut_lte: endDate,
-                            },
-                        ],
-                    },
-                    {
-                        AND: [
-                            {
-                                checkIn_lte: startDate,
-                            },
-                            {
-                                checkOut_gte: endDate,
-                            },
-                        ],
-                    },
-                ],
                 hotel: {
                     id: hotelId,
                 },
             },
-            orderBy: orderBy,
-        }
-
-        if (roomId) {
-            opArgs.where.room = {}
-            opArgs.where.room.id = roomId
+            orderBy,
         }
 
         return prisma.query.bookings(opArgs, info)
@@ -142,10 +123,10 @@ const Query = {
         {
             data: { query, orderBy, first },
         },
-        { prisma, req, res },
+        { prisma, req },
         info,
     ) {
-        const hotelId = getHotelId({ req, res })
+        const hotelId = getHotelId({ req })
 
         const opArgs = {
             where: {
@@ -161,7 +142,7 @@ const Query = {
                     type_contains: query,
                 },
                 {
-                    roomNumber_contains: query,
+                    roomNumber: Number.parseInt(query, 10),
                 },
             ]
         }
@@ -180,10 +161,10 @@ const Query = {
         {
             data: { query, orderBy },
         },
-        { prisma, req, res },
+        { prisma, req },
         info,
     ) {
-        const hotelId = getHotelId({ req, res })
+        const hotelId = getHotelId({ req })
 
         const opArgs = {
             where: {

@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { createGuestSchema } from '@hb/common'
 import handleValidate from '../../utils/handleValidate'
-import Loader from '../Loader'
+import withLoader from '../Loader'
 import Input from '../Input'
 
 const CREATE_GUEST = gql`
@@ -32,7 +32,7 @@ const GuestModal = ({
 
     const [createGuest, { loading }] = useMutation(CREATE_GUEST, {
         variables: {
-            name,
+            name: name.trim(),
             phone,
         },
         onCompleted: handleComplete,
@@ -68,6 +68,8 @@ const GuestModal = ({
             setModalGuestIsOpen(false)
         }
     }
+
+    const ButtonWithLoader = withLoader(() => 'დამატება')
 
     return (
         <Modal
@@ -115,7 +117,7 @@ const GuestModal = ({
                 />
 
                 <button type="submit" className="button button--primary">
-                    {loading ? <Loader /> : 'დამატება'}
+                    <ButtonWithLoader isLoading={loading} />
                 </button>
             </form>
         </Modal>

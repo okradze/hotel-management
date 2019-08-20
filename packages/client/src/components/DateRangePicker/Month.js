@@ -7,11 +7,7 @@ import DashboardContext from '../Dashboard/DashboardContext'
 
 const Month = () => {
     const { current, roomId, dayClass } = useContext(DateRangePickerContext)
-    const { bookings, loading } = useContext(DashboardContext)
-
-    const filteredBookings = bookings.filter(
-        ({ room, guest }) => room.id === roomId && guest,
-    )
+    const { data, loading } = useContext(DashboardContext)
 
     const weeks = getWeeksForMonth(current.getMonth(), current.getFullYear())
 
@@ -20,7 +16,10 @@ const Month = () => {
             <div key={index} className="DatePicker__week">
                 {week.map((date, i) => (
                     <Day
-                        dayType={dayClass(date, filteredBookings)}
+                        dayType={dayClass(
+                            date,
+                            data.find(room => room.id === roomId).bookings,
+                        )}
                         date={date}
                         key={i}
                     />

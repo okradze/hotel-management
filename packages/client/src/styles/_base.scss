@@ -12,7 +12,7 @@
     --light-primary: 60, 85, 107;
     --secondary: 24, 197, 125;
     --light-grey: #eff3f5;
-    --dark: 68, 68, 68;
+    --dark: 51, 51, 51;
     --border: #ebebeb;
     --border-radius: 10px;
     --focus: rgba(48, 140, 219, 1);
@@ -30,6 +30,7 @@ body {
     color: rgba(var(--dark), 1);
     -webkit-font-smoothing: antialiased;
     background-color: var(--light-grey);
+    overflow-y: scroll;
 }
 
 #root {

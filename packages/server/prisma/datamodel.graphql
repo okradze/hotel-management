@@ -11,7 +11,7 @@ type Hotel {
 
 type Room {
     id: ID! @id
-    roomNumber: String!
+    roomNumber: Int!
     rate: Int!
     type: String!
     hotel: Hotel! @relation(name: "RoomToHotel", onDelete: SET_NULL)
