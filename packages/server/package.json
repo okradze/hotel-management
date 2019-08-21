@@ -30,6 +30,7 @@
         "graphql-parse-resolve-info": "^4.4.3",
         "helmet": "^3.19.0",
         "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.6.10",
         "prisma-binding": "^2.3.15"
     }
 }

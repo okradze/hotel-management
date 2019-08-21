@@ -1,3 +1,4 @@
+import getHotelId from '../../utils/getHotelId'
 import generateToken from '../../utils/generateToken'
 import setCookie from '../../utils/setCookie'
 
@@ -16,7 +17,7 @@ export default async function refreshToken(
         info,
     )
 
-    const token = generateToken(hotel.id)
+    const token = generateToken(hotelId)
     setCookie({ res }, token)
 
     return hotel
