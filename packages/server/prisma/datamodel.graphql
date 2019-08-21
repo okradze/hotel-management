@@ -3,6 +3,7 @@ type Hotel {
     name: String!
     email: String! @unique
     phone: String! @unique
+    createdAt: DateTime! @createdAt
     password: String!
     rooms: [Room!]! @relation(name: "RoomToHotel", onDelete: CASCADE)
     bookings: [Booking!]! @relation(name: "BookingToHotel", onDelete: CASCADE)

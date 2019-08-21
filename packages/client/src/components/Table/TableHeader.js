@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import Select from '../Select'
@@ -13,7 +13,6 @@ const ROOMS_COUNT = gql`
 
 const TableHeader = ({ current, setCurrent }) => {
     const [roomsCount, setRoomsCount] = useState()
-    const startDay = new Date(new Date().setHours(0, 0, 0, 0))
     const { setPaginationData, paginationData } = useContext(DashboardContext)
 
     useQuery(ROOMS_COUNT, {
@@ -43,12 +42,7 @@ const TableHeader = ({ current, setCurrent }) => {
     return (
         <div className="table-header">
             <div className="table-nav">
-                {current >=
-                    new Date(
-                        startDay.getFullYear(),
-                        startDay.getMonth() + 1,
-                        1,
-                    ) && (
+                <div className="table-nav__left">
                     <span
                         tabIndex="0"
                         role="button"
@@ -60,27 +54,32 @@ const TableHeader = ({ current, setCurrent }) => {
                         onClick={() => handleBack(current, setCurrent)}
                         className="triangle triangle--left table-nav__triangle--left"
                     />
-                )}
+                </div>
+
                 <div className="table-nav__date">
                     {renderMonthAndYear(current)}
                 </div>
-                <span
-                    tabIndex="0"
-                    role="button"
-                    onKeyPress={e => {
-                        if (e.which === 13) {
-                            handleNext(current, setCurrent)
+                <div className="table-nav__right">
+                    <Select
+                        setValue={(text, value) =>
+                            setPaginationData({ ...value, text })
                         }
-                    }}
-                    onClick={() => handleNext(current, setCurrent)}
-                    className="triangle triangle--right table-nav__triangle--right"
-                />
+                        value={paginationData.text}
+                        options={createOptions()}
+                    />
+                    <span
+                        tabIndex="0"
+                        role="button"
+                        onKeyPress={e => {
+                            if (e.which === 13) {
+                                handleNext(current, setCurrent)
+                            }
+                        }}
+                        onClick={() => handleNext(current, setCurrent)}
+                        className="triangle triangle--right table-nav__triangle--right"
+                    />
+                </div>
             </div>
-            <Select
-                setValue={setPaginationData}
-                value={paginationData.text}
-                options={createOptions()}
-            />
         </div>
     )
 }

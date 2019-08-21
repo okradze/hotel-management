@@ -617,6 +617,7 @@ type Hotel {
   name: String!
   email: String!
   phone: String!
+  createdAt: DateTime!
   password: String!
   rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking!]
@@ -699,6 +700,8 @@ enum HotelOrderByInput {
   email_DESC
   phone_ASC
   phone_DESC
+  createdAt_ASC
+  createdAt_DESC
   password_ASC
   password_DESC
 }
@@ -708,6 +711,7 @@ type HotelPreviousValues {
   name: String!
   email: String!
   phone: String!
+  createdAt: DateTime!
   password: String!
 }
 
@@ -866,6 +870,14 @@ input HotelWhereInput {
   phone_not_starts_with: String
   phone_ends_with: String
   phone_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
   password: String
   password_not: String
   password_in: [String!]

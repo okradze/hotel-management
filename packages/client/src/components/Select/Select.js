@@ -22,12 +22,12 @@ const Select = ({ setValue, options, value }) => {
                                     <button
                                         onKeyPress={e => {
                                             if (e.which === 13) {
-                                                setValue({ ...value, text })
+                                                setValue(text, value)
                                                 setIsOpen(false)
                                             }
                                         }}
                                         onClick={() => {
-                                            setValue({ ...value, text })
+                                            setValue(text, value)
                                             setIsOpen(false)
                                         }}
                                         className="button--transparent"

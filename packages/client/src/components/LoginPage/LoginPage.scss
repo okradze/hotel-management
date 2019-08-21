@@ -26,7 +26,7 @@
     &__input-group {
         display: flex;
         flex-direction: column;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
     &__error {
         margin-bottom: 2rem;
@@ -44,7 +44,6 @@
     }
     button {
         margin-bottom: 2rem;
-        
     }
 }
 .SignupForm__error {

@@ -27,6 +27,7 @@
         "express": "^4.17.1",
         "graphql": "^14.4.2",
         "graphql-import": "^0.7.1",
+        "graphql-parse-resolve-info": "^4.4.3",
         "helmet": "^3.19.0",
         "jsonwebtoken": "^8.5.1",
         "prisma-binding": "^2.3.15"

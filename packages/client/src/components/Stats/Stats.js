@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import gql from 'graphql-tag'
 import RevenueChart from '../RevenueChart'
 import TotalComponent from './TotalComponent'
@@ -20,23 +20,9 @@ const Stats = () => {
     return (
         <div className="container">
             <div className="Stats">
-                <div className="StatsFilter">
-                    <select>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                    </select>
-                </div>
                 <TotalComponent text="სტუმარი" QUERY={GUESTS_COUNT} />
                 <TotalComponent text="ოთახი" QUERY={ROOMS_COUNT} />
-
-                <div className="Stats__chart chart">
-                    <header className="chart__header">
-                        <h3 className="chart__heading">შემოსავალი:</h3>
-                    </header>
-                    <RevenueChart />
-                </div>
+                <RevenueChart />
             </div>
         </div>
     )

@@ -8,11 +8,12 @@
     }
 
     &__button {
+        box-shadow: 0 0 2px 1px rgba(var(--dark), 0.1);
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 1rem 2rem;
+        padding: 1rem 3rem;
         background-color: var(--light-grey);
         border: none;
         border-radius: var(--border-radius);
@@ -50,7 +51,7 @@
 
     &__item {
         button {
-            padding: 1rem 2rem;
+            padding: 1rem 3rem;
             width: 100%;
             text-align: start;
         }

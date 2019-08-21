@@ -2,7 +2,9 @@ import gql from 'graphql-tag'
 
 export const LOGIN = gql`
     mutation login($email: String!, $password: String!) {
-        login(data: { email: $email, password: $password })
+        login(data: { email: $email, password: $password }) {
+            createdAt
+        }
     }
 `
 
@@ -20,6 +22,8 @@ export const SIGNUP = gql`
                 email: $email
                 password: $password
             }
-        )
+        ) {
+            createdAt
+        }
     }
 `

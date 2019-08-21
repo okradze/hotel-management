@@ -11,7 +11,7 @@ import './Header.scss'
 
 const Header = ({ history }) => {
     const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
-    const { setIsAuth } = useContext(Context)
+    const { setUser } = useContext(Context)
     const client = useApolloClient()
     const [logout, { loading }] = useMutation(LOGOUT, {
         onCompleted: handleCompleted,
@@ -19,7 +19,7 @@ const Header = ({ history }) => {
 
     function handleCompleted(data) {
         if (data.logout === true) {
-            setIsAuth(false)
+            setUser(null)
             client.clearStore().then(() => {
                 history.push('/login')
             })

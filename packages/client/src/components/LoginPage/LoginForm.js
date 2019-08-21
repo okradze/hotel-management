@@ -10,7 +10,7 @@ const LoginForm = ({ history, setIsLogin }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const { setIsAuth } = useContext(Context)
+    const { setUser } = useContext(Context)
     const [login, { error, loading }] = useMutation(LOGIN, {
         variables: {
             email,
@@ -39,9 +39,9 @@ const LoginForm = ({ history, setIsLogin }) => {
         }
     }
 
-    function handleCompleted(data) {
-        if (data.login === true) {
-            setIsAuth(true)
+    function handleCompleted({ login }) {
+        if (login) {
+            setUser({ createdAt: login.createdAt })
             history.push('/dashboard')
         }
     }

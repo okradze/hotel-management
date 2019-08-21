@@ -54,12 +54,14 @@ const GuestModal = ({
             const { data } = await createGuest()
             handleChoose(data.createGuest)
         } catch (e) {
-            e.inner.forEach(({ path, message }) => {
-                setErrors(prevState => ({
-                    ...prevState,
-                    [path]: [message],
-                }))
-            })
+            if (e.inner) {
+                e.inner.forEach(({ path, message }) => {
+                    setErrors(prevState => ({
+                        ...prevState,
+                        [path]: [message],
+                    }))
+                })
+            }
         }
     }
 

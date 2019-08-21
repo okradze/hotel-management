@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import gql from 'graphql-tag'
 import { Line } from 'react-chartjs-2'
 import { useQuery } from '@apollo/react-hooks'
+import Select from '../Select'
+import { Context as AuthContext } from '../../context/AuthContext'
 
 const GET_REVENUE_DATA = gql`
     query {
@@ -11,6 +13,19 @@ const GET_REVENUE_DATA = gql`
 
 const RevenueChart = () => {
     const [chartData, setChartData] = useState()
+    const { user } = useContext(AuthContext)
+    const [startDate, setStartDate] = useState({
+        value: new Date(
+            new Date().getFullYear(),
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+        ).toISOString(),
+        text: new Date().getFullYear(),
+    })
 
     useQuery(GET_REVENUE_DATA, {
         onCompleted: handleCompleted,
@@ -79,49 +94,76 @@ const RevenueChart = () => {
         return data
     }
 
+    function createOptions() {
+        const options = []
+        const startYear = new Date(user.createdAt).getFullYear()
+        const currentYear = new Date().getFullYear()
+
+        for (let i = startYear; i <= currentYear; i++) {
+            if (i !== startDate.value) {
+                options.push({
+                    value: new Date(i, 0, 0, 0, 0, 0, 0).toISOString(),
+                    text: i,
+                })
+            }
+        }
+
+        return options
+    }
+
     return (
-        <Line
-            id="revenue-chart"
-            data={getChartData}
-            options={{
-                legend: {
-                    display: false,
-                },
-                animation: {
-                    easing: 'easeInOutBack',
-                    duration: 800,
-                },
-                tooltips: {
-                    titleFontSize: 16,
-                    bodyFontSize: 16,
-                },
-                scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                fontColor: '#777',
-                                beginAtZero: false,
-                                maxTicksLimit: 6,
-                                padding: 10,
-                                fontSize: 15,
+        <div className="Stats__chart chart">
+            <header className="chart__header">
+                <h3 className="chart__heading">შემოსავალი:</h3>
+                <Select
+                    value={startDate.text}
+                    setValue={(text, value) => setStartDate({ text, value })}
+                    options={createOptions()}
+                />
+            </header>
+            <Line
+                id="revenue-chart"
+                data={getChartData}
+                options={{
+                    legend: {
+                        display: false,
+                    },
+                    animation: {
+                        easing: 'easeInOutBack',
+                        duration: 800,
+                    },
+                    tooltips: {
+                        titleFontSize: 16,
+                        bodyFontSize: 16,
+                    },
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    fontColor: '#777',
+                                    beginAtZero: false,
+                                    maxTicksLimit: 6,
+                                    padding: 10,
+                                    fontSize: 15,
+                                },
                             },
-                        },
-                    ],
-                    xAxes: [
-                        {
-                            gridLines: {
-                                color: 'rgba(255,255,255,0.1)',
+                        ],
+                        xAxes: [
+                            {
+                                gridLines: {
+                                    color: 'rgba(255,255,255,0.1)',
+                                },
+                                ticks: {
+                                    fontColor: '#777',
+                                    fontSize: 15,
+                                    padding: 10,
+                                },
                             },
-                            ticks: {
-                                fontColor: '#777',
-                                fontSize: 15,
-                                padding: 10,
-                            },
-                        },
-                    ],
-                },
-            }}
-        />
+                        ],
+                    },
+                }}
+            />
+        </div>
     )
 }
 

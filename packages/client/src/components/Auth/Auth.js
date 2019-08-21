@@ -6,7 +6,7 @@ import withLoader from '../Loader'
 import REFRESH_TOKEN from './gql'
 
 const Auth = ({ history }) => {
-    const { setIsAuth } = useContext(Context)
+    const { setUser } = useContext(Context)
 
     useQuery(REFRESH_TOKEN, {
         onError: () => {
@@ -14,9 +14,9 @@ const Auth = ({ history }) => {
         },
         onCompleted: handleCompleted,
     })
-    function handleCompleted(data) {
-        if (data.refreshToken === true) {
-            setIsAuth(true)
+    function handleCompleted({ refreshToken }) {
+        if (refreshToken) {
+            setUser({ createdAt: refreshToken.createdAt })
             history.push('/dashboard')
         }
     }

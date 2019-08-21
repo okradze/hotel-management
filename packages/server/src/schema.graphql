@@ -4,7 +4,7 @@ type Query {
     rooms(data: QueryRoomsInput!): [Room!]!
     bookings(data: QueryBookingsInput!): [Booking!]!
     guests(data: QueryGuestsInput!): [Guest!]!
-    refreshToken: Boolean!
+    refreshToken: Hotel!
     roomsCount: Int!
     guestsCount: Int!
     revenueData: [Float!]!
@@ -12,9 +12,10 @@ type Query {
 }
 
 type Mutation {
-    login(data: LoginHotelInput): Boolean!
+    auth: Hotel!
+    login(data: LoginHotelInput): Hotel!
     logout: Boolean!
-    createHotel(data: CreateHotelInput): Boolean!
+    createHotel(data: CreateHotelInput): Hotel!
     createRoom(data: CreateRoomInput): Room!
     createGuest(data: CreateGuestInput): Guest!
     createBooking(data: CreateBookingInput): Booking!
@@ -25,6 +26,7 @@ type Hotel {
     name: String!
     email: String!
     phone: String!
+    createdAt: String!
     rooms: [Room!]!
     bookings: [Booking!]!
     guests: [Guest!]!
@@ -78,9 +80,6 @@ input QueryGuestsInput {
 input QueryBookingsInput {
     startDate: String!
     orderBy: BookingOrderByInput
-    roomId: ID
-    minRoomNumber: Int!
-    maxRoomNumber: Int!
 }
 
 input LoginHotelInput {

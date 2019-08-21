@@ -10,7 +10,7 @@ import handleValidate from '../../utils/handleValidate'
 import Input from '../Input'
 
 const SignupForm = ({ history, setIsLogin }) => {
-    const { setIsAuth } = useContext(Context)
+    const { setUser } = useContext(Context)
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -31,6 +31,19 @@ const SignupForm = ({ history, setIsLogin }) => {
             password,
         },
         onCompleted: handleCompleted,
+        // onError: error => {
+        //     if (error === 'Email taken') {
+        //         setErrors(prevState => ({
+        //             ...prevState,
+        //             email: 'ელ-ფოსტა გამოყენებულია',
+        //         }))
+        //     } else if (error === 'Phone taken') {
+        //         setErrors(prevState => ({
+        //             ...prevState,
+        //             phone: 'ტელეფონის ნომერი გამოყენებულია',
+        //         }))
+        //     }
+        // },
     })
 
     function handleNameChange(e) {
@@ -91,18 +104,20 @@ const SignupForm = ({ history, setIsLogin }) => {
             )
             signup()
         } catch (e) {
-            e.inner.forEach(({ path, message }) => {
-                setErrors(prevState => ({
-                    ...prevState,
-                    [path]: [message],
-                }))
-            })
+            if (e.inner) {
+                e.inner.forEach(({ path, message }) => {
+                    setErrors(prevState => ({
+                        ...prevState,
+                        [path]: [message],
+                    }))
+                })
+            }
         }
     }
 
-    function handleCompleted(data) {
-        if (data.createHotel === true) {
-            setIsAuth(true)
+    function handleCompleted({ createHotel }) {
+        if (createHotel) {
+            setUser({ createAt: createHotel.createdAt })
             history.push('/dashboard')
         }
     }

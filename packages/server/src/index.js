@@ -4,7 +4,7 @@ import express from 'express'
 import { importSchema } from 'graphql-import'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
-import resolvers from './resolvers/index'
+import resolvers from './resolvers'
 import prisma from './prisma'
 
 const app = express()
