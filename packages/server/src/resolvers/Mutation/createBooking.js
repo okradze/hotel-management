@@ -1,13 +1,13 @@
 import { createBookingSchema } from '@hb/common'
 import getHotelId from '../../utils/getHotelId'
+import Guest from '../../models/Guest'
+import Room from '../../models/Room'
+import Booking from '../../models/Booking'
 
-export default async function createBooking(
-    parent,
-    { data },
-    { prisma, req },
-    info,
-) {
+export default async function createBooking(parent, { data }, { req }, info) {
     try {
+        const hotelId = getHotelId({ req })
+
         createBookingSchema.validateSync(
             {
                 ...data,
@@ -20,55 +20,32 @@ export default async function createBooking(
             },
         )
 
-        const hotelId = getHotelId({ req })
-
-        const roomExists = await prisma.exists.Room({
+        const roomExists = await Room.exists({
             id: data.room,
-            hotel: {
-                id: hotelId,
-            },
+            hotel: hotelId,
         })
 
         if (!roomExists) {
             throw new Error('Room not found')
         }
 
-        const guestExists = await prisma.exists.Guest({
+        const guestExists = await Guest.exists({
             id: data.guest,
-            hotel: {
-                id: hotelId,
-            },
+            hotel: hotelId,
         })
 
         if (!guestExists) {
             throw new Error('Guest not found')
         }
 
-        return prisma.mutation.createBooking(
-            {
-                data: {
-                    checkIn: data.checkIn,
-                    checkOut: data.checkOut,
-                    color: data.color,
-                    hotel: {
-                        connect: {
-                            id: hotelId,
-                        },
-                    },
-                    room: {
-                        connect: {
-                            id: data.room,
-                        },
-                    },
-                    guest: {
-                        connect: {
-                            id: data.guest,
-                        },
-                    },
-                },
-            },
-            info,
-        )
+        const booking = new Booking({
+            ...data,
+            hotel: hotelId,
+        })
+
+        const newBooking = await booking.save()
+
+        return newBooking
     } catch (e) {
         throw new Error('Unable to create booking')
     }

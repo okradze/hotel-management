@@ -1,11 +1,6 @@
 import mongoose from 'mongoose'
 
 const bookingSchema = mongoose.Schema({
-    id: {
-        type: mongoose.ObjectId,
-        required: true,
-        unique: true,
-    },
     color: {
         type: String,
         required: true,

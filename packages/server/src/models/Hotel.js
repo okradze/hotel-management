@@ -2,11 +2,6 @@ import mongoose from 'mongoose'
 
 const hotelSchema = mongoose.Schema(
     {
-        id: {
-            id: mongoose.ObjectId,
-            required: true,
-            unique: true,
-        },
         email: {
             type: String,
             required: true,

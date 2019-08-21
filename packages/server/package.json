@@ -5,9 +5,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node dist/index.js",
-        "heroku-postbuild": "babel src --out-dir dist --copy-files",
-        "dev": "env-cmd -f ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
-        "prisma-deploy": "prisma deploy -e ../config/dev.env && prisma generate -e ../config/dev.env"
+        "dev": "env-cmd -f ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",

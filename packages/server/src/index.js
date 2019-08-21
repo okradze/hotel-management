@@ -6,7 +6,6 @@ import { importSchema } from 'graphql-import'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import resolvers from './resolvers'
-import prisma from './prisma'
 
 const startServer = async () => {
     const app = express()
@@ -19,7 +18,6 @@ const startServer = async () => {
         typeDefs: importSchema('./src/schema.graphql'),
         resolvers,
         context: ({ req, res }) => ({
-            prisma,
             req,
             res,
         }),

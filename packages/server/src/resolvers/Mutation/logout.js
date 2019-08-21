@@ -6,5 +6,6 @@ export default function logout(parent, args, { req, res }) {
     res.cookie('token', '', {
         expires: new Date(0),
     })
+
     return true
 }

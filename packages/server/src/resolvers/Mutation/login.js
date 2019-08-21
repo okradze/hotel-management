@@ -1,17 +1,12 @@
 import bcrypt from 'bcryptjs'
-import parseInfo from '../../utils/parseInfo'
 import setCookie from '../../utils/setCookie'
 import generateToken from '../../utils/generateToken'
+import Hotel from '../../models/Hotel'
 
-export default async function login(parent, { data }, { prisma, res }, info) {
+export default async function login(parent, { data }, { res }) {
     // query user by email
 
-    const hotel = await prisma.query.hotel(
-        {
-            where: { email: data.email },
-        },
-        parseInfo(info, 'password'),
-    )
+    const hotel = await Hotel.findOne({ email: data.email })
 
     if (!hotel) {
         throw new Error('Unable to login')

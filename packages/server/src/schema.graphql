@@ -1,8 +1,5 @@
-# import BookingOrderByInput, RoomOrderByInput, GuestOrderByInput from './generated/prisma.graphql'
-
 type Query {
     rooms(data: QueryRoomsInput!): [Room!]!
-    bookings(data: QueryBookingsInput!): [Booking!]!
     guests(data: QueryGuestsInput!): [Guest!]!
     refreshToken: Hotel!
     roomsCount: Int!
@@ -12,7 +9,6 @@ type Query {
 }
 
 type Mutation {
-    auth: Hotel!
     login(data: LoginHotelInput): Hotel!
     logout: Boolean!
     createHotel(data: CreateHotelInput): Hotel!
@@ -66,20 +62,17 @@ input QueryDashboardData {
 }
 
 input QueryRoomsInput {
-    orderBy: RoomOrderByInput
     query: String
     first: Int!
 }
 
 input QueryGuestsInput {
-    orderBy: GuestOrderByInput
     query: String
     first: Int
 }
 
 input QueryBookingsInput {
     startDate: String!
-    orderBy: BookingOrderByInput
 }
 
 input LoginHotelInput {
