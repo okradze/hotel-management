@@ -14,6 +14,10 @@ const guestSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
+    hotel: {
+        type: mongoose.ObjectId,
+        required: true,
+    },
 })
 
 const Guest = mongoose.model('Guest', guestSchema)

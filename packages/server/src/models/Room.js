@@ -18,6 +18,10 @@ const roomSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    hotel: {
+        type: mongoose.ObjectId,
+        required: true,
+    },
 })
 
 const Room = mongoose.model('Room', roomSchema)

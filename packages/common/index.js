@@ -70,8 +70,7 @@ const createBookingSchema = object().shape({
     room: id,
     guest: id,
     color: string()
-        .min(7)
-        .max(7)
+        .matches(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)
         .required(),
 })
 
