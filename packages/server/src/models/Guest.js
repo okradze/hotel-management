@@ -4,10 +4,12 @@ const guestSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
+        trim: true,
     },
     phone: {
         type: Number,
         required: true,
+        trim: true,
     },
     hotel: {
         type: mongoose.ObjectId,

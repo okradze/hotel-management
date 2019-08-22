@@ -1,38 +1,24 @@
+import Room from '../../models/Room'
 import getHotelId from '../../utils/getHotelId'
 
-export default function rooms(
-    parent,
-    { data: { query, orderBy, first } },
-    { prisma, req },
-    info,
-) {
+export default async function rooms(parent, { data: { query } }, { req }) {
     const hotelId = getHotelId({ req })
 
     const opArgs = {
-        where: {
-            hotel: {
-                id: hotelId,
-            },
-        },
+        hotel: hotelId,
     }
 
     if (query) {
-        opArgs.where.OR = [
-            {
-                type_contains: query,
-            },
-            {
-                roomNumber: Number.parseInt(query, 10),
-            },
-        ]
+        const parsedNumber = Number.parseInt(query, 10)
+
+        if (parsedNumber) {
+            opArgs.roomNumber = parsedNumber
+        } else {
+            opArgs.type = {
+                $regex: new RegExp(query, 'i'),
+            }
+        }
     }
 
-    if (orderBy) {
-        opArgs.orderBy = orderBy
-    }
-    if (first) {
-        opArgs.first = first
-    }
-
-    return prisma.query.rooms(opArgs, info)
+    return await Room.find(opArgs)
 }

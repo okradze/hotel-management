@@ -1,29 +1,13 @@
+import Guest from '../../models/Guest'
 import getHotelId from '../../utils/getHotelId'
 
-export default function guests(
-    parent,
-    { data: { query, orderBy } },
-    { prisma, req },
-    info,
-) {
+export default async function guests(parent, { data: { query } }, { req }) {
     const hotelId = getHotelId({ req })
 
-    const opArgs = {
-        where: {
-            hotel: {
-                id: hotelId,
-            },
-        },
-        first: 6,
-    }
+    const splittedQuery = `(${query.replace(' ', '|')})`
 
-    if (query) {
-        opArgs.where.name_contains = query
-    }
-
-    if (orderBy) {
-        opArgs.orderBy = orderBy
-    }
-
-    return prisma.query.guests(opArgs, info)
+    return await Guest.find({
+        hotel: hotelId,
+        name: { $regex: new RegExp(splittedQuery, 'i') },
+    })
 }
