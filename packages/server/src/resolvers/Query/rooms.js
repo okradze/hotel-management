@@ -1,7 +1,11 @@
 import Room from '../../models/Room'
 import getHotelId from '../../utils/getHotelId'
 
-export default async function rooms(parent, { data: { query } }, { req }) {
+export default async function rooms(
+    parent,
+    { data: { query, limit = 0, skip = 0 } },
+    { req },
+) {
     const hotelId = getHotelId({ req })
 
     const opArgs = {
@@ -21,4 +25,6 @@ export default async function rooms(parent, { data: { query } }, { req }) {
     }
 
     return await Room.find(opArgs)
+        .limit(limit)
+        .skip(skip)
 }

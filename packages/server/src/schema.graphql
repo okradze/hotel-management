@@ -5,7 +5,6 @@ type Query {
     roomsCount: Int!
     guestsCount: Int!
     revenueData: [Float!]!
-    dashboardData(data: QueryDashboardData!): [Room!]!
 }
 
 type Mutation {
@@ -55,15 +54,11 @@ type Booking {
     color: String!
 }
 
-input QueryDashboardData {
-    startDate: String!
-    first: Int!
-    skip: Int!
-}
-
 input QueryRoomsInput {
+    limit: Int!
     query: String
-    first: Int!
+    skip: Int
+    startDate: String
 }
 
 input QueryGuestsInput {

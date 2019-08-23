@@ -1,4 +1,3 @@
-import dashboardData from './Query/dashboardData'
 import guests from './Query/guests'
 import refreshToken from './Query/refreshToken'
 import guestsCount from './Query/guestsCount'
@@ -15,7 +14,6 @@ import Room from './Room'
 
 const resolvers = {
     Query: {
-        dashboardData,
         guests,
         guestsCount,
         revenueData,
