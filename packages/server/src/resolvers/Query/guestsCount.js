@@ -1,18 +1,8 @@
+import Guest from '../../models/Guest'
 import getHotelId from '../../utils/getHotelId'
 
-export default async function guestsCount(parent, args, { prisma, req }) {
+export default async function guestsCount(parent, args, { req }) {
     const hotelId = getHotelId({ req })
 
-    const { aggregate } = await prisma.query.guestsConnection(
-        {
-            where: {
-                hotel: {
-                    id: hotelId,
-                },
-            },
-        },
-        `{ aggregate {count }}`,
-    )
-
-    return aggregate.count
+    return await Guest.countDocuments({ hotel: hotelId })
 }
