@@ -33,7 +33,7 @@ type Room {
     rate: Int!
     type: String!
     hotel: Hotel!
-    bookings: [Booking!]!
+    bookings(startDate: String!): [Booking!]!
 }
 
 type Guest {
@@ -55,19 +55,14 @@ type Booking {
 }
 
 input QueryRoomsInput {
-    limit: Int!
     query: String
     skip: Int
-    startDate: String
+    limit: Int!
 }
 
 input QueryGuestsInput {
-    query: String
-    first: Int
-}
-
-input QueryBookingsInput {
-    startDate: String!
+    query: String!
+    limit: Int!
 }
 
 input LoginHotelInput {

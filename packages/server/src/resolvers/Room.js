@@ -1,9 +1,58 @@
+import Booking from '../models/Booking'
+
 const Room = {
-    bookings(parent, args, ctx, info) {
-        console.log('parent', parent)
-        console.log('args', args)
-        console.log('ctx', ctx)
-        const endDate = new Date(startDate.getFullYear() + 1, 0, 0, 0, 0, 0, 0)
+    async bookings(parent, { startDate }) {
+        // month end
+        const endDate = new Date(
+            new Date(startDate).getFullYear(),
+            new Date(startDate).getMonth() + 1,
+            0,
+            0,
+            0,
+            0,
+            0,
+        ).toISOString()
+
+        return await Booking.find({
+            $or: [
+                {
+                    $and: [
+                        {
+                            checkIn: {
+                                $gte: startDate,
+                            },
+                        },
+                        {
+                            checkIn: {
+                                $lte: endDate,
+                            },
+                        },
+                    ],
+                },
+                {
+                    $and: [
+                        {
+                            checkOut: {
+                                $gte: startDate,
+                            },
+                        },
+                        {
+                            checkOut: {
+                                $lte: endDate,
+                            },
+                        },
+                    ],
+                },
+                {
+                    checkIn: {
+                        $lte: startDate,
+                    },
+                    checkOut: {
+                        $gte: endDate,
+                    },
+                },
+            ],
+        })
     },
 }
 

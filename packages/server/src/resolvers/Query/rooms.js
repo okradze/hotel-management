@@ -3,7 +3,7 @@ import getHotelId from '../../utils/getHotelId'
 
 export default async function rooms(
     parent,
-    { data: { query, limit = 0, skip = 0 } },
+    { data: { query, limit, skip = 0 } },
     { req },
 ) {
     const hotelId = getHotelId({ req })
