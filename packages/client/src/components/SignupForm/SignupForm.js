@@ -1,22 +1,22 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { withRouter } from 'react-router-dom'
 import { createHotelSchema } from '@hb/common'
 import { Context } from '../../context/AuthContext'
 import withLoader from '../Loader/Loader'
 import { SIGNUP } from '../LoginPage/gql'
-import './LoginPage.scss'
 import handleValidate from '../../utils/handleValidate'
 import Input from '../Input/Input'
+import '../LoginPage/LoginPage.scss'
 
 const SignupForm = ({ history, setIsLogin }) => {
-    const { setUser } = useContext(Context)
+    const { setUser } = React.useContext(Context)
 
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [phone, setPhone] = useState('')
-    const [errors, setErrors] = useState({
+    const [name, setName] = React.useState('')
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const [phone, setPhone] = React.useState('')
+    const [errors, setErrors] = React.useState({
         name: '',
         email: '',
         phone: '',

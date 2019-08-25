@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import DateRangePickerContext from './Context'
 
 const Day = ({ date, dayType }) => {
-    const { handleClick } = useContext(DateRangePickerContext)
+    const { handleClick } = React.useContext(DateRangePickerContext)
 
     const dayClassName =
         dayType === 'disabled'

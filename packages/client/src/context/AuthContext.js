@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const Context = React.createContext()
 
 const AuthContext = ({ children }) => {
-    const [user, setUser] = useState()
+    const [user, setUser] = React.useState()
 
     return (
         <Context.Provider value={{ user, setUser }}>

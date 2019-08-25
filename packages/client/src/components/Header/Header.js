@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import { withRouter, NavLink } from 'react-router-dom'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { useMutation, useApolloClient } from '@apollo/react-hooks'
@@ -10,8 +10,8 @@ import ChartSvg from '../../svg/Chart'
 import './Header.scss'
 
 const Header = ({ history }) => {
-    const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
-    const { setUser } = useContext(Context)
+    const [dropdownIsOpen, setDropdownIsOpen] = React.useState(false)
+    const { setUser } = React.useContext(Context)
     const client = useApolloClient()
     const [logout, { loading }] = useMutation(LOGOUT, {
         onCompleted: handleCompleted,

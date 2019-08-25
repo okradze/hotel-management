@@ -7993,6 +7993,11 @@ jest-pnp-resolver@^1.2.1:
   resolved "https://registry.yarnpkg.com/jest-pnp-resolver/-/jest-pnp-resolver-1.2.1.tgz#ecdae604c077a7fbc70defb6d517c3c1c898923a"
   integrity sha512-pgFw2tm54fzgYvc/OHrnysABEObZCUNFnhjoRjaVOCN8NYc032/gVjPaHD4Aq6ApkSieWtfKAFQtmDKAmhupnQ==
 
+jest-react-hooks-mock@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/jest-react-hooks-mock/-/jest-react-hooks-mock-1.1.0.tgz#50b2ce4da8502d705279c3d92cc6935660aa24fa"
+  integrity sha512-Xn/fOTb0jv8Nz3P4kYr587cx9npFcw3eJWDSaZN4RJFFsAF/1O9spFBp9CQcdEkWwBefub95FuVOBBdOrTgz0w==
+
 jest-regex-util@^24.3.0, jest-regex-util@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-24.9.0.tgz#c13fb3380bde22bf6575432c493ea8fe37965636"

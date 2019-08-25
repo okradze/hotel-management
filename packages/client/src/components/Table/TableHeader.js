@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import Select from '../Select'
@@ -12,8 +12,10 @@ const ROOMS_COUNT = gql`
 `
 
 const TableHeader = ({ current, setCurrent }) => {
-    const [roomsCount, setRoomsCount] = useState()
-    const { setPaginationData, paginationData } = useContext(DashboardContext)
+    const [roomsCount, setRoomsCount] = React.useState()
+    const { setPaginationData, paginationData } = React.useContext(
+        DashboardContext,
+    )
 
     useQuery(ROOMS_COUNT, {
         onCompleted: data => {
@@ -23,7 +25,7 @@ const TableHeader = ({ current, setCurrent }) => {
 
     function createOptions() {
         const options = []
-        const limit = paginationData.limit
+        const limit = { paginationData }
         const times = Math.ceil(roomsCount / limit)
 
         for (let i = 0; i < times; i++) {

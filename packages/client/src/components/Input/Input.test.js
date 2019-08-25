@@ -1,29 +1,33 @@
 import Input from './Input'
 
-let value, onChange, id, type, error, text, wrapper
-
-beforeEach(() => {
-    value = ''
-    onChange = jest.fn().mockImplementation(({ target }) => {
-        value = target.value
-    })
-    text = 'Email'
-    id = 'email'
-    type = 'email'
-    error = ''
-    wrapper = shallow(
-        <Input
-            value={value}
-            onChange={onChange}
-            id={id}
-            type={type}
-            error={error}
-            text={text}
-        />,
-    )
-})
-
 describe('Input', () => {
+    let value, onChange, id, type, error, text, wrapper
+
+    beforeEach(() => {
+        value = ''
+        onChange = jest.fn().mockImplementation(({ target }) => {
+            value = target.value
+        })
+        text = 'Email'
+        id = 'email'
+        type = 'email'
+        error = ''
+        wrapper = shallow(
+            <Input
+                value={value}
+                onChange={onChange}
+                id={id}
+                type={type}
+                error={error}
+                text={text}
+            />,
+        )
+    })
+
+    afterEach(() => {
+        jest.clearAllMocks()
+    })
+
     it('renders', () => {
         expect(wrapper).toMatchSnapshot()
     })

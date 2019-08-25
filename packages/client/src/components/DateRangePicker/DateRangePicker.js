@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import DateRangePickerContext from './Context'
 import DatePicker from './DatePicker'
@@ -18,8 +18,8 @@ const DateRangePicker = ({
 }) => {
     const startDay = new Date(new Date().setHours(0, 0, 0, 0))
 
-    const [isOpen, setIsOpen] = useState(false)
-    const [choosingStartDate, setChoosingStartDate] = useState(true)
+    const [isOpen, setIsOpen] = React.useState(false)
+    const [choosingStartDate, setChoosingStartDate] = React.useState(true)
 
     function dayClass(date, bookings) {
         if (date < startDay) {

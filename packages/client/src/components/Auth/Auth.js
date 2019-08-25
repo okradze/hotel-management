@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { Context } from '../../context/AuthContext'
@@ -6,7 +6,7 @@ import withLoader from '../Loader'
 import REFRESH_TOKEN from './gql'
 
 const Auth = ({ history }) => {
-    const { setUser } = useContext(Context)
+    const { setUser } = React.useContext(Context)
 
     useQuery(REFRESH_TOKEN, {
         onError: () => {

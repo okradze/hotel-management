@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import gql from 'graphql-tag'
 import { Line } from 'react-chartjs-2'
 import { useQuery } from '@apollo/react-hooks'
@@ -12,9 +12,9 @@ const GET_REVENUE_DATA = gql`
 `
 
 const RevenueChart = () => {
-    const [chartData, setChartData] = useState()
-    const { user } = useContext(AuthContext)
-    const [startDate, setStartDate] = useState({
+    const [chartData, setChartData] = React.useState()
+    const { user } = React.useContext(AuthContext)
+    const [startDate, setStartDate] = React.useState({
         value: new Date().getFullYear(),
         text: new Date().getFullYear(),
     })

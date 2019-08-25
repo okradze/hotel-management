@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import DateRangePickerContext from './Context'
 import Day from './Day'
 import { getWeeksForMonth } from './utils'
@@ -6,8 +6,8 @@ import withLoader from '../Loader'
 import DashboardContext from '../Dashboard/DashboardContext'
 
 const Month = () => {
-    const { current, roomId, dayClass } = useContext(DateRangePickerContext)
-    const { data, loading } = useContext(DashboardContext)
+    const { current, roomId, dayClass } = React.useContext(DateRangePickerContext)
+    const { data, loading } = React.useContext(DashboardContext)
 
     const weeks = getWeeksForMonth(current.getMonth(), current.getFullYear())
 

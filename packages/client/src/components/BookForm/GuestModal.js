@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Modal from 'react-modal'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -23,9 +23,9 @@ const GuestModal = ({
     setModalGuestIsOpen,
     handleChoose,
 }) => {
-    const [name, setName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [errors, setErrors] = useState({
+    const [name, setName] = React.useState('')
+    const [phone, setPhone] = React.useState('')
+    const [errors, setErrors] = React.useState({
         name: '',
         phone: '',
     })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Modal from 'react-modal'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -23,10 +23,10 @@ const CREATE_ROOM = gql`
 Modal.setAppElement('#root')
 
 const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
-    const [roomNumber, setRoomNumber] = useState(1)
-    const [rate, setRate] = useState(1)
-    const [type, setType] = useState('')
-    const [errors, setErrors] = useState({
+    const [roomNumber, setRoomNumber] = React.useState(1)
+    const [rate, setRate] = React.useState(1)
+    const [type, setType] = React.useState('')
+    const [errors, setErrors] = React.useState({
         roomNumber: '',
         rate: '',
         type: '',

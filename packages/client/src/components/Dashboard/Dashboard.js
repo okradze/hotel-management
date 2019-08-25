@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import BookForm from '../BookForm'
 import Table from '../Table'
@@ -6,10 +6,10 @@ import DashboardContext from './DashboardContext'
 import GET_DASHBOARD_DATA from './gql'
 
 const Dashboard = () => {
-    const [current, setCurrent] = useState(new Date())
-    const [data, setData] = useState([])
-    const [tempBooking, setTempBooking] = useState()
-    const [paginationData, setPaginationData] = useState({
+    const [current, setCurrent] = React.useState(new Date())
+    const [data, setData] = React.useState([])
+    const [tempBooking, setTempBooking] = React.useState()
+    const [paginationData, setPaginationData] = React.useState({
         limit: 20,
         skip: 0,
         text: '1 - 20',

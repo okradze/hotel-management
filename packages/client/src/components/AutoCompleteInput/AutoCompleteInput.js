@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import './AutoCompleteInput.scss'
 import PlusSvg from '../../svg/Plus'
@@ -15,7 +15,7 @@ const AutoCompleteInput = ({
     handleChoose,
     renderItem,
 }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = React.useState(false)
 
     const AutoCompleteWithLoader = withLoader(({ data }) =>
         data.map((item, index) => (

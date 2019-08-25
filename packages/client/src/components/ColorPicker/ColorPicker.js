@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import Color from './Color'
 import './ColorPicker.scss'
 
 const ColorPicker = ({ colors, color, setColor }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = React.useState(false)
 
     return (
         <div className="ColorPicker-wrapper">

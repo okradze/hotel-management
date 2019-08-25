@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import TableHeader from './TableHeader'
 import DashboardContext from '../Dashboard/DashboardContext'
 import withLoader from '../Loader'
@@ -13,7 +13,7 @@ Number.prototype.pad = function(size) {
 }
 
 const Table = () => {
-    const { current, setCurrent, tempBooking, data, loading } = useContext(
+    const { current, setCurrent, tempBooking, data, loading } = React.useContext(
         DashboardContext,
     )
 

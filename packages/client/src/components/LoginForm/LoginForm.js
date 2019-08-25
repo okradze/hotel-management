@@ -1,15 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { withRouter } from 'react-router-dom'
 import { Context } from '../../context/AuthContext'
-import withLoader from '../Loader/'
 import { LOGIN } from '../LoginPage/gql'
 import Input from '../Input/Input'
+import withLoader from '../Loader'
 
 export const LoginForm = ({ history, setIsLogin }) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const { setUser } = useContext(Context)
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const { setUser } = React.useContext(Context)
 
     const [login, { error, loading }] = useMutation(LOGIN, {
         variables: {
@@ -78,7 +78,7 @@ export const LoginForm = ({ history, setIsLogin }) => {
                 </form>
                 <div>
                     <p
-                        role="link"
+                        role="button"
                         tabIndex="0"
                         onKeyPress={e => {
                             if (e.which === 13) {

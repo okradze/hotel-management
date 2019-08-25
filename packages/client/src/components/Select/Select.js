@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
+import SelectItem from './SelectItem'
 
 const Select = ({ setValue, options, value }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = React.useState(false)
 
     return (
         <div className="select">
@@ -18,24 +19,13 @@ const Select = ({ setValue, options, value }) => {
                     <div className="select__list-wrapper">
                         <ul className="select__list">
                             {options.map(({ text, value }, index) => (
-                                <li key={index} className="select__item">
-                                    <button
-                                        onKeyPress={e => {
-                                            if (e.which === 13) {
-                                                setValue(text, value)
-                                                setIsOpen(false)
-                                            }
-                                        }}
-                                        onClick={() => {
-                                            setValue(text, value)
-                                            setIsOpen(false)
-                                        }}
-                                        className="button--transparent"
-                                        type="button"
-                                    >
-                                        {text}
-                                    </button>
-                                </li>
+                                <SelectItem
+                                    key={index}
+                                    text={text}
+                                    value={value}
+                                    setIsOpen={setIsOpen}
+                                    setValue={setValue}
+                                />
                             ))}
                         </ul>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import { useApolloClient } from '@apollo/react-hooks'
 import { createBookingSchema } from '@hb/common'
 import { GET_GUESTS, GET_ROOMS, CREATE_BOOKING } from './gql'
@@ -21,30 +21,30 @@ const BookForm = ({ refetchDashboardData }) => {
         setData,
         setPaginationData,
         paginationData,
-    } = useContext(DashboardContext)
+    } = React.useContext(DashboardContext)
 
     const client = useApolloClient()
 
-    const [guests, setGuests] = useState([])
-    const [rooms, setRooms] = useState([])
-    const [formData, setFormData] = useState({
+    const [guests, setGuests] = React.useState([])
+    const [rooms, setRooms] = React.useState([])
+    const [formData, setFormData] = React.useState({
         guest: '',
         room: '',
         color: '#3c556b',
     })
-    const [guestsLoading, setGuestsLoading] = useState(false)
-    const [roomsLoading, setRoomsLoading] = useState(false)
-    const [bookingLoading, setBookingLoading] = useState(false)
+    const [guestsLoading, setGuestsLoading] = React.useState(false)
+    const [roomsLoading, setRoomsLoading] = React.useState(false)
+    const [bookingLoading, setBookingLoading] = React.useState(false)
 
-    const [modalGuestIsOpen, setModalGuestIsOpen] = useState(false)
-    const [modalRoomIsOpen, setModalRoomIsOpen] = useState(false)
+    const [modalGuestIsOpen, setModalGuestIsOpen] = React.useState(false)
+    const [modalRoomIsOpen, setModalRoomIsOpen] = React.useState(false)
 
-    const [guestInput, setGuestInput] = useState('')
-    const [roomInput, setRoomInput] = useState('')
+    const [guestInput, setGuestInput] = React.useState('')
+    const [roomInput, setRoomInput] = React.useState('')
 
     // checkin, checkout
-    const [startDate, setStartDate] = useState(startDay)
-    const [endDate, setEndDate] = useState(startDay)
+    const [startDate, setStartDate] = React.useState(startDay)
+    const [endDate, setEndDate] = React.useState(startDay)
 
     function resetForm() {
         setFormData({
