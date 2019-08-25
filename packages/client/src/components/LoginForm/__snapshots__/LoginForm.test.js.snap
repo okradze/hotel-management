@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm renders 1`] = `
+<LoginForm
+  history={
+    Object {
+      "push": [MockFunction],
+    }
+  }
+  setIsLogin={[MockFunction]}
+/>
+`;

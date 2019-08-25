@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select renders when closed 1`] = `
+<div
+  className="select"
+>
+  <OutsideClickHandler
+    disabled={false}
+    display="block"
+    onOutsideClick={[Function]}
+    useCapture={true}
+  >
+    <button
+      className="select__button"
+      onClick={[Function]}
+      type="button"
+    >
+      <span>
+        1
+      </span>
+    </button>
+  </OutsideClickHandler>
+</div>
+`;
+
+exports[`Select renders when is open 1`] = `
+<div
+  className="select"
+>
+  <OutsideClickHandler
+    disabled={false}
+    display="block"
+    onOutsideClick={[Function]}
+    useCapture={true}
+  >
+    <button
+      className="select__button"
+      onClick={[Function]}
+      type="button"
+    >
+      <span>
+        1
+      </span>
+    </button>
+  </OutsideClickHandler>
+</div>
+`;
