@@ -11,6 +11,7 @@ import createHotel from './Mutation/createHotel'
 import login from './Mutation/login'
 import logout from './Mutation/logout'
 import Room from './Room'
+import Booking from './Booking'
 
 const resolvers = {
     Query: {
@@ -30,6 +31,7 @@ const resolvers = {
         logout,
     },
     Room,
+    Booking,
 }
 
 export { resolvers as default }

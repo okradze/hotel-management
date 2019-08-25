@@ -1,23 +1,16 @@
 import gql from 'graphql-tag'
 
 const GET_DASHBOARD_DATA = gql`
-    query($startDate: String!, $first: Int!, $skip: Int!) {
-        dashboardData(
-            data: { startDate: $startDate, first: $first, skip: $skip }
-        ) {
-            id
+    query($startDate: String!, $limit: Int!, $skip: Int!) {
+        rooms(data: { limit: $limit, skip: $skip }) {
+            _id
             roomNumber
-            bookings {
-                id
+            bookings(startDate: $startDate) {
                 guest {
                     name
                     phone
                 }
                 color
-                room {
-                    id
-                    roomNumber
-                }
                 checkIn
                 checkOut
             }

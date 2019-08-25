@@ -4,9 +4,9 @@ const Input = ({ value, onChange, id, type, error, text }) => (
     <div className="LoginForm__input-group">
         <label htmlFor="name">{text}</label>
         <input
+            id={id}
             value={value}
             onChange={onChange}
-            id={id}
             className="input"
             type={type}
             autoComplete="off"

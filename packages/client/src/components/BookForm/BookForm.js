@@ -14,9 +14,14 @@ import './BookForm.scss'
 
 const BookForm = ({ refetchDashboardData }) => {
     const startDay = new Date(new Date().setHours(0, 0, 0, 0))
-    const { current, setCurrent, setBookings, setTempBooking } = useContext(
-        DashboardContext,
-    )
+    const {
+        current,
+        setCurrent,
+        setTempBooking,
+        setData,
+        setPaginationData,
+        paginationData,
+    } = useContext(DashboardContext)
 
     const client = useApolloClient()
 
@@ -86,7 +91,7 @@ const BookForm = ({ refetchDashboardData }) => {
                 refetchDashboardData()
 
                 // rerender component by changing state
-                setBookings([])
+                setData([])
             })
 
             resetForm()
@@ -95,22 +100,35 @@ const BookForm = ({ refetchDashboardData }) => {
         } catch (err) {}
     }
 
-    function handleGuestChoose({ name, id }) {
-        if (name && id) {
+    function handleGuestChoose({ name, _id }) {
+        if (name && _id) {
             setFormData(prevState => ({
                 ...prevState,
-                guest: id,
+                guest: _id,
             }))
             setGuestInput(name)
         }
     }
-    function handleRoomChoose({ roomNumber, type, rate, id }) {
+    function handleRoomChoose({ roomNumber, type, rate, _id }) {
         if (roomNumber && type && rate) {
             setFormData(prevState => ({
                 ...prevState,
-                room: id,
+                room: _id,
             }))
             setRoomInput(`N${roomNumber}, ${type}, ${rate}₾`)
+
+            const skip =
+                Math.floor(roomNumber / paginationData.limit) *
+                paginationData.limit
+
+            // avoid rerender if state will be same
+
+            if (paginationData.skip !== skip) {
+                setPaginationData(prevState => ({
+                    ...prevState,
+                    skip,
+                }))
+            }
         }
     }
 
@@ -131,7 +149,7 @@ const BookForm = ({ refetchDashboardData }) => {
                 query: GET_GUESTS,
                 variables: {
                     query: value,
-                    first: 6,
+                    limit: 6,
                 },
                 fetchPolicy: 'no-cache',
             })
@@ -154,7 +172,7 @@ const BookForm = ({ refetchDashboardData }) => {
             query: GET_ROOMS,
             variables: {
                 query: value,
-                first: 6,
+                limit: 6,
             },
             fetchPolicy: 'no-cache',
         })

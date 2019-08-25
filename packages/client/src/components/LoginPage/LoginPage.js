@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import './LoginPage.scss'
 
-const LoginForm = React.lazy(() => import('./LoginForm'))
-const SignupForm = React.lazy(() => import('./SignupForm'))
+const LoginForm = React.lazy(() => import('../LoginForm/LoginForm'))
+const SignupForm = React.lazy(() => import('../SignupForm/SignupForm'))
 
 const LoginPage = () => {
     const [isLogin, setIsLogin] = useState(true)

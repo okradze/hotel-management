@@ -35,7 +35,7 @@ const startServer = async () => {
 
     await mongoose.connect(dbURL, {
         useNewUrlParser: true,
-        useCreateIndex: true,
+        autoIndex: false,
     })
 
     const PORT = process.env.PORT || 4000

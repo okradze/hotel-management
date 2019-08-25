@@ -23,15 +23,15 @@ const TableHeader = ({ current, setCurrent }) => {
 
     function createOptions() {
         const options = []
-        const size = 20
-        const times = Math.ceil(roomsCount / size)
+        const limit = paginationData.limit
+        const times = Math.ceil(roomsCount / limit)
 
         for (let i = 0; i < times; i++) {
             options.push({
-                text: `${i * size + 1} - ${i * size + size}`,
+                text: `${i * limit + 1} - ${i * limit + limit}`,
                 value: {
-                    skip: i * size,
-                    first: size,
+                    skip: i * limit,
+                    limit,
                 },
             })
         }

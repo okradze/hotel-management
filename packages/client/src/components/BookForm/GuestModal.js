@@ -10,7 +10,7 @@ import Input from '../Input'
 const CREATE_GUEST = gql`
     mutation CreateGuest($name: String!, $phone: String!) {
         createGuest(data: { name: $name, phone: $phone }) {
-            id
+            _id
             name
         }
     }

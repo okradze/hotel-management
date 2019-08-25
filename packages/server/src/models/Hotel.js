@@ -5,6 +5,7 @@ const hotelSchema = mongoose.Schema(
         email: {
             type: String,
             required: true,
+            index: true,
             unique: true,
         },
         phone: {

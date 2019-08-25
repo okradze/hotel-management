@@ -5,6 +5,7 @@ const guestSchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        index: 'text',
     },
     phone: {
         type: Number,
@@ -14,6 +15,7 @@ const guestSchema = mongoose.Schema({
     hotel: {
         type: mongoose.ObjectId,
         required: true,
+        index: true,
     },
 })
 

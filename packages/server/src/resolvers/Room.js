@@ -1,7 +1,8 @@
 import Booking from '../models/Booking'
+import generateBookingsQuery from '../utils/generateBookingsQuery'
 
 const Room = {
-    async bookings(parent, { startDate }) {
+    async bookings({ _id }, { startDate }) {
         // month end
         const endDate = new Date(
             new Date(startDate).getFullYear(),
@@ -13,46 +14,9 @@ const Room = {
             0,
         ).toISOString()
 
-        return await Booking.find({
-            $or: [
-                {
-                    $and: [
-                        {
-                            checkIn: {
-                                $gte: startDate,
-                            },
-                        },
-                        {
-                            checkIn: {
-                                $lte: endDate,
-                            },
-                        },
-                    ],
-                },
-                {
-                    $and: [
-                        {
-                            checkOut: {
-                                $gte: startDate,
-                            },
-                        },
-                        {
-                            checkOut: {
-                                $lte: endDate,
-                            },
-                        },
-                    ],
-                },
-                {
-                    checkIn: {
-                        $lte: startDate,
-                    },
-                    checkOut: {
-                        $gte: endDate,
-                    },
-                },
-            ],
-        })
+        const query = generateBookingsQuery(startDate, endDate)
+
+        return await Booking.find({ room: _id, ...query })
     },
 }
 

@@ -42,26 +42,26 @@ export default async function createBooking(parent, { data }, { req }) {
             $or: [
                 {
                     checkIn: {
+                        $lte: data.checkIn,
+                    },
+                    checkOut: {
+                        $gte: data.checkIn,
+                    },
+                },
+                {
+                    checkIn: {
+                        $lte: data.checkOut,
+                    },
+                    checkOut: {
+                        $gte: data.checkOut,
+                    },
+                },
+                {
+                    checkIn: {
                         $gte: data.checkIn,
                     },
                     checkOut: {
-                        $lte: data.checkIn,
-                    },
-                },
-                {
-                    checkIn: {
-                        $gte: data.checkOut,
-                    },
-                    checkOut: {
-                        $lte: data.checkIn,
-                    },
-                },
-                {
-                    checkIn: {
-                        $lte: data.checkIn,
-                    },
-                    checkOut: {
-                        $gte: data.checkOut,
+                        $lte: data.checkOut,
                     },
                 },
             ],

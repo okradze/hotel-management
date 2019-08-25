@@ -4,6 +4,7 @@ const roomSchema = mongoose.Schema({
     roomNumber: {
         type: Number,
         required: true,
+        index: true,
     },
     rate: {
         type: Number,
@@ -18,6 +19,8 @@ const roomSchema = mongoose.Schema({
         required: true,
     },
 })
+
+roomSchema.index({ roomNumber: 1, type: 'text' })
 
 const Room = mongoose.model('Room', roomSchema)
 

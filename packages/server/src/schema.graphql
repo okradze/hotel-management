@@ -4,20 +4,21 @@ type Query {
     refreshToken: Hotel!
     roomsCount: Int!
     guestsCount: Int!
-    revenueData: [Float!]!
+    revenueData(startDate: Int!): [Float!]!
 }
 
 type Mutation {
-    login(data: LoginHotelInput): Hotel!
+    login(data: LoginHotelInput): Hotel! @rateLimit(max: 2, window: "1s")
     logout: Boolean!
     createHotel(data: CreateHotelInput): Hotel!
-    createRoom(data: CreateRoomInput): Room!
-    createGuest(data: CreateGuestInput): Guest!
+    createRoom(data: CreateRoomInput): Room! @rateLimit(max: 2, window: "1s")
+    createGuest(data: CreateGuestInput): Guest! @rateLimit(max: 2, window: "1s")
     createBooking(data: CreateBookingInput): Booking!
+        @rateLimit(max: 2, window: "1s")
 }
 
 type Hotel {
-    id: ID!
+    _id: ID!
     name: String!
     email: String!
     phone: String!
@@ -28,7 +29,7 @@ type Hotel {
 }
 
 type Room {
-    id: ID!
+    _id: ID!
     roomNumber: Int!
     rate: Int!
     type: String!
@@ -37,7 +38,7 @@ type Room {
 }
 
 type Guest {
-    id: ID!
+    _id: ID!
     name: String!
     phone: String!
     hotel: Hotel!
@@ -45,7 +46,7 @@ type Guest {
 }
 
 type Booking {
-    id: ID!
+    _id: ID!
     hotel: Hotel!
     room: Room!
     guest: Guest!

@@ -6,7 +6,7 @@ const date = require('yup').date
 const email = string()
     .trim()
     .min(1, 'შეიყვანეთ სწორი ელ-ფოსტა')
-    .max(100, 'ელ-ფოსტა უნდა შეიცავდეს მაქსიმუმ 50 ასოს')
+    .max(100, 'ელ-ფოსტა უნდა შეიცავდეს მაქსიმუმ 100 ასოს')
     .email('შეიყვანეთ სწორი ელ-ფოსტა')
 
 const phone = string()
@@ -17,7 +17,7 @@ const phone = string()
 
 const password = string()
     .min(8, 'პაროლი უნდა შეიცავდეს 8 ასოს ან მეტს')
-    .max(32, 'პაროლი უნდა იყოს შეიცავდეს მაქსიმუმ 32 ასოს')
+    .max(64, 'პაროლი უნდა იყოს შეიცავდეს მაქსიმუმ 64 ასოს')
 
 const createHotelSchema = object().shape({
     name: string()

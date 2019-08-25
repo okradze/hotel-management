@@ -10,7 +10,7 @@ const Dashboard = () => {
     const [data, setData] = useState([])
     const [tempBooking, setTempBooking] = useState()
     const [paginationData, setPaginationData] = useState({
-        first: 20,
+        limit: 20,
         skip: 0,
         text: '1 - 20',
     })
@@ -22,14 +22,14 @@ const Dashboard = () => {
                 current.getMonth(),
                 1,
             ).toISOString(),
-            first: paginationData.first,
+            limit: paginationData.limit,
             skip: paginationData.skip,
         },
         onCompleted: handleCompleted,
     })
 
-    function handleCompleted({ dashboardData }) {
-        setData(dashboardData)
+    function handleCompleted({ rooms }) {
+        setData(rooms)
     }
 
     return (
@@ -38,11 +38,12 @@ const Dashboard = () => {
                 value={{
                     current,
                     setCurrent,
+                    data,
+                    setData,
                     paginationData,
                     setPaginationData,
                     tempBooking,
                     setTempBooking,
-                    data,
                     loading,
                 }}
             >

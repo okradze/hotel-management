@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import gql from 'graphql-tag'
 import RevenueChart from '../RevenueChart'
 import TotalComponent from './TotalComponent'

@@ -8,10 +8,12 @@ const bookingSchema = mongoose.Schema({
     checkIn: {
         type: String,
         required: true,
+        index: true,
     },
     checkOut: {
         type: String,
         required: true,
+        index: true,
     },
     hotel: {
         type: mongoose.ObjectId,
@@ -20,6 +22,8 @@ const bookingSchema = mongoose.Schema({
     room: {
         type: mongoose.ObjectId,
         required: true,
+        ref: 'Room',
+        index: true,
     },
     guest: {
         type: mongoose.ObjectId,

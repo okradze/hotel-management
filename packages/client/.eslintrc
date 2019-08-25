@@ -1,5 +1,10 @@
 {
     "extends": ["airbnb"],
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
+    },
     "rules": {
         "react/jsx-filename-extension": "off",
         "react/jsx-indent": "off",
@@ -21,7 +26,9 @@
         "jsx-a11y/label-has-associated-control": "warn",
         "semi": "off",
         "nonblock-statement-body-position": "off",
-        "react/jsx-one-expression-per-line": "off"
+        "react/jsx-one-expression-per-line": "off",
+        "one-var": "off",
+        "one-var-declaration-per-line": "off"
     },
     "parserOptions": {
         "ecmaVersion": 10,
@@ -31,7 +38,5 @@
             "spread": true
         }
     },
-    "globals": {
-        "document": true
-    }
+    "parser": "babel-eslint"
 }

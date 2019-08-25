@@ -12,7 +12,7 @@ const CREATE_ROOM = gql`
         createRoom(
             data: { roomNumber: $roomNumber, rate: $rate, type: $type }
         ) {
-            id
+            _id
             rate
             roomNumber
             type

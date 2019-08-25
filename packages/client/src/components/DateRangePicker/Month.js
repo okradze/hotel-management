@@ -18,7 +18,7 @@ const Month = () => {
                     <Day
                         dayType={dayClass(
                             date,
-                            data.find(room => room.id === roomId).bookings,
+                            data.find(room => room._id === roomId).bookings,
                         )}
                         date={date}
                         key={i}

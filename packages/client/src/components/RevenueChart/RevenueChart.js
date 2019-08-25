@@ -6,8 +6,8 @@ import Select from '../Select'
 import { Context as AuthContext } from '../../context/AuthContext'
 
 const GET_REVENUE_DATA = gql`
-    query {
-        revenueData
+    query RevenueData($startDate: Int!) {
+        revenueData(startDate: $startDate)
     }
 `
 
@@ -15,19 +15,14 @@ const RevenueChart = () => {
     const [chartData, setChartData] = useState()
     const { user } = useContext(AuthContext)
     const [startDate, setStartDate] = useState({
-        value: new Date(
-            new Date().getFullYear(),
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-        ).toISOString(),
+        value: new Date().getFullYear(),
         text: new Date().getFullYear(),
     })
 
     useQuery(GET_REVENUE_DATA, {
+        variables: {
+            startDate: startDate.value,
+        },
         onCompleted: handleCompleted,
     })
 
@@ -102,7 +97,7 @@ const RevenueChart = () => {
         for (let i = startYear; i <= currentYear; i++) {
             if (i !== startDate.value) {
                 options.push({
-                    value: new Date(i, 0, 0, 0, 0, 0, 0).toISOString(),
+                    value: i,
                     text: i,
                 })
             }

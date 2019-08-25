@@ -1,18 +1,18 @@
 import gql from 'graphql-tag'
 
 export const GET_GUESTS = gql`
-    query Guests($query: String, $orderBy: GuestOrderByInput) {
-        guests(data: { query: $query, orderBy: $orderBy }) {
-            id
+    query Guests($query: String!, $limit: Int!) {
+        guests(data: { query: $query, limit: $limit }) {
+            _id
             name
         }
     }
 `
 
 export const GET_ROOMS = gql`
-    query Rooms($query: String, $orderBy: RoomOrderByInput, $first: Int!) {
-        rooms(data: { query: $query, orderBy: $orderBy, first: $first }) {
-            id
+    query Rooms($query: String, $limit: Int!) {
+        rooms(data: { query: $query, limit: $limit }) {
+            _id
             rate
             roomNumber
             type
@@ -36,7 +36,7 @@ export const CREATE_BOOKING = gql`
                 color: $color
             }
         ) {
-            id
+            _id
             guest {
                 name
                 phone
