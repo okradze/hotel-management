@@ -1,12 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginForm renders 1`] = `
-<LoginForm
-  history={
-    Object {
-      "push": [MockFunction],
-    }
-  }
-  setIsLogin={[MockFunction]}
-/>
+<div
+  className="LoginPage-wrapper"
+>
+  <div
+    className="LoginPage-form"
+  >
+    <form
+      className="LoginForm"
+      onSubmit={[Function]}
+    >
+      <Input
+        id="email"
+        onChange={[Function]}
+        text="ელ-ფოსტა:"
+        type="text"
+        value="abc"
+      />
+      <Input
+        id="password"
+        onChange={[Function]}
+        text="პაროლი:"
+        type="password"
+        value="abc"
+      />
+      <p
+        className="LoginForm__error error"
+      >
+        abc
+      </p>
+      <button
+        className="button button--secondary"
+        type="submit"
+      >
+        <Component
+          isLoading={false}
+        />
+      </button>
+    </form>
+    <button
+      className="button--transparent form-link"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      type="button"
+    >
+      რეგისტრაცია
+    </button>
+  </div>
+</div>
 `;

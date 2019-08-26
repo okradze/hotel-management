@@ -3,7 +3,7 @@
     "env": {
         "browser": true,
         "es6": true,
-        "jest": true
+        "jest/globals": true
     },
     "rules": {
         "react/jsx-filename-extension": "off",
@@ -28,7 +28,8 @@
         "nonblock-statement-body-position": "off",
         "react/jsx-one-expression-per-line": "off",
         "one-var": "off",
-        "one-var-declaration-per-line": "off"
+        "one-var-declaration-per-line": "off",
+        "react/react-in-jsx-scope": "off"
     },
     "parserOptions": {
         "ecmaVersion": 10,
@@ -38,5 +39,6 @@
             "spread": true
         }
     },
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "plugins": ["jest"]
 }

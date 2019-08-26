@@ -1,3 +1,4 @@
+import { UserInputError } from 'apollo-server-express'
 import bcrypt from 'bcryptjs'
 import setCookie from '../../utils/setCookie'
 import generateToken from '../../utils/generateToken'
@@ -9,7 +10,7 @@ export default async function login(parent, { data }, { res }) {
     const hotel = await Hotel.findOne({ email: data.email })
 
     if (!hotel) {
-        throw new Error('Unable to login')
+        throw new UserInputError('no_user')
     }
 
     // check if password is correct
@@ -17,7 +18,7 @@ export default async function login(parent, { data }, { res }) {
     const isMatch = await bcrypt.compare(data.password, hotel.password)
 
     if (!isMatch) {
-        throw new Error('Unable to login')
+        throw new UserInputError('no_user')
     }
 
     const token = generateToken(hotel.id)

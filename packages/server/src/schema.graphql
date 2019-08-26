@@ -8,13 +8,12 @@ type Query {
 }
 
 type Mutation {
-    login(data: LoginHotelInput): Hotel! @rateLimit(max: 2, window: "1s")
+    login(data: LoginHotelInput): Hotel!
     logout: Boolean!
     createHotel(data: CreateHotelInput): Hotel!
-    createRoom(data: CreateRoomInput): Room! @rateLimit(max: 2, window: "1s")
-    createGuest(data: CreateGuestInput): Guest! @rateLimit(max: 2, window: "1s")
+    createRoom(data: CreateRoomInput): Room!
+    createGuest(data: CreateGuestInput): Guest!
     createBooking(data: CreateBookingInput): Booking!
-        @rateLimit(max: 2, window: "1s")
 }
 
 type Hotel {

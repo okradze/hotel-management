@@ -121,7 +121,7 @@ const BookForm = ({ refetchDashboardData }) => {
                 Math.floor(roomNumber / paginationData.limit) *
                 paginationData.limit
 
-            // avoid rerender if state will be same
+            // rerender if state will be different
 
             if (paginationData.skip !== skip) {
                 setPaginationData(prevState => ({

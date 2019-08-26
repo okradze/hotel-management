@@ -9,14 +9,20 @@ import withLoader from '../Loader'
 export const LoginForm = ({ history, setIsLogin }) => {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [error, setError] = React.useState('')
     const { setUser } = React.useContext(Context)
 
-    const [login, { error, loading }] = useMutation(LOGIN, {
+    const [login, { loading }] = useMutation(LOGIN, {
         variables: {
             email,
             password,
         },
         onCompleted: handleCompleted,
+        onError: err => {
+            if (err.message.endsWith('no_user')) {
+                setError('მომხმარებელი არ მოიძებნა')
+            }
+        },
     })
 
     function handleEmailChange(e) {
@@ -67,30 +73,25 @@ export const LoginForm = ({ history, setIsLogin }) => {
                         id="password"
                     />
 
-                    {error && (
-                        <p className="LoginForm__error error">
-                            მომხმარებელი არ მოიძებნა
-                        </p>
-                    )}
+                    {error && <p className="LoginForm__error error">{error}</p>}
+
                     <button type="submit" className="button button--secondary">
                         <ButtonWithLoader isLoading={loading} />
                     </button>
                 </form>
-                <div>
-                    <p
-                        role="button"
-                        tabIndex="0"
-                        onKeyPress={e => {
-                            if (e.which === 13) {
-                                setIsLogin(false)
-                            }
-                        }}
-                        onClick={() => setIsLogin(false)}
-                        className="form-link"
-                    >
-                        რეგისტრაცია
-                    </p>
-                </div>
+
+                <button
+                    type="button"
+                    onKeyPress={e => {
+                        if (e.which === 13) {
+                            setIsLogin(false)
+                        }
+                    }}
+                    onClick={() => setIsLogin(false)}
+                    className="button--transparent form-link"
+                >
+                    რეგისტრაცია
+                </button>
             </div>
         </div>
     )
