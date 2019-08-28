@@ -2,7 +2,7 @@ import React from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { withRouter } from 'react-router-dom'
 import { Context } from '../../context/AuthContext'
-import { LOGIN } from '../LoginPage/gql'
+import { LOGIN } from '../AuthPage/gql'
 import Input from '../Input/Input'
 import withLoader from '../Loader'
 
@@ -55,45 +55,44 @@ export const LoginForm = ({ history, setIsLogin }) => {
     const ButtonWithLoader = withLoader(() => 'შესვლა')
 
     return (
-        <div className="LoginPage-wrapper">
-            <div className="LoginPage-form">
-                <form onSubmit={e => handleSubmit(e)} className="LoginForm">
-                    <Input
-                        text="ელ-ფოსტა:"
-                        value={email}
-                        onChange={handleEmailChange}
-                        type="text"
-                        id="email"
-                    />
-                    <Input
-                        text="პაროლი:"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        type="password"
-                        id="password"
-                    />
+        <>
+            <form onSubmit={e => handleSubmit(e)} className="LoginForm">
+                <Input
+                    text="ელ-ფოსტა"
+                    value={email}
+                    onChange={handleEmailChange}
+                    type="text"
+                    id="email"
+                    placeholder={'შეიყვანეთ ელ-ფოსტა'}
+                />
+                <Input
+                    text="პაროლი"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    type="password"
+                    id="password"
+                    placeholder={'შეიყვანეთ პაროლი'}
+                />
 
-                    {error && <p className="LoginForm__error error">{error}</p>}
+                {error && <p className="LoginForm__error error">{error}</p>}
 
-                    <button type="submit" className="button button--secondary">
-                        <ButtonWithLoader isLoading={loading} />
-                    </button>
-                </form>
-
-                <button
-                    type="button"
-                    onKeyPress={e => {
-                        if (e.which === 13) {
-                            setIsLogin(false)
-                        }
-                    }}
-                    onClick={() => setIsLogin(false)}
-                    className="button--transparent form-link"
-                >
-                    რეგისტრაცია
+                <button type="submit" className="button button--secondary">
+                    <ButtonWithLoader isLoading={loading} />
                 </button>
-            </div>
-        </div>
+            </form>
+            <button
+                type="button"
+                onKeyPress={e => {
+                    if (e.which === 13) {
+                        setIsLogin(false)
+                    }
+                }}
+                onClick={() => setIsLogin(false)}
+                className="button--transparent form-link"
+            >
+                რეგისტრაცია &rarr;
+            </button>
+        </>
     )
 }
 

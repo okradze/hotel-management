@@ -22,7 +22,7 @@ const client = new ApolloClient({
 })
 
 const Dashboard = React.lazy(() => import('../components/Dashboard'))
-const LoginPage = React.lazy(() => import('../components/LoginPage'))
+const AuthPage = React.lazy(() => import('../components/AuthPage'))
 const Stats = React.lazy(() => import('../components/Stats'))
 
 const AppRouter = () => {
@@ -35,7 +35,7 @@ const AppRouter = () => {
                             <Route path="/" component={Auth} exact />
                             <PublicRoute
                                 path="/login"
-                                component={LoginPage}
+                                component={AuthPage}
                                 exact
                             />
                             <>

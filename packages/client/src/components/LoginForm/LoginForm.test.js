@@ -1,6 +1,6 @@
 import { MockedProvider } from '@apollo/react-testing'
 import { LoginForm } from './LoginForm'
-import { LOGIN } from '../LoginPage/gql'
+import { LOGIN } from '../AuthPage/gql'
 
 const mocks = [
     {
@@ -69,6 +69,17 @@ describe('LoginForm', () => {
             expect(wrapper.exists('.loader')).toEqual(true)
         })
         it('on error state', () => {
+            jest.spyOn(React, 'useState').mockImplementation(() => [
+                'abc123',
+                jest.fn(),
+            ])
+
+            wrapper = mount(
+                <MockedProvider mocks={mocks} addTypename={false}>
+                    <LoginForm history={history} setIsLogin={setIsLogin} />
+                </MockedProvider>,
+            )
+
             wrapper.find('form').simulate('submit', { preventDefault })
 
             setTimeout(() => {

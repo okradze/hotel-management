@@ -1,10 +1,11 @@
+import { UserInputError } from 'apollo-server-express'
 import { createBookingSchema } from '@hb/common'
 import getHotelId from '../../utils/getHotelId'
 import Guest from '../../models/Guest'
 import Room from '../../models/Room'
 import Booking from '../../models/Booking'
 
-export default async function createBooking(parent, { data }, { req }) {
+export default async function createBooking(parent, { data }, { req, pubsub }) {
     try {
         const hotelId = getHotelId({ req })
 
@@ -26,7 +27,7 @@ export default async function createBooking(parent, { data }, { req }) {
         })
 
         if (!roomExists) {
-            throw new Error('Room not found')
+            throw new UserInputError('no_room')
         }
 
         const guestExists = await Guest.exists({
@@ -35,7 +36,7 @@ export default async function createBooking(parent, { data }, { req }) {
         })
 
         if (!guestExists) {
-            throw new Error('Guest not found')
+            throw new UserInputError('no_guest')
         }
 
         const bookingExistsWithSameDates = await Booking.exists({
@@ -68,16 +69,24 @@ export default async function createBooking(parent, { data }, { req }) {
         })
 
         if (bookingExistsWithSameDates) {
-            throw new Error('Booking exists with same date')
+            throw new Error('booking_exists')
         }
 
-        const booking = new Booking({
+        const booking = await new Booking({
             ...data,
             hotel: hotelId,
+        }).save()
+
+        pubsub.publish(`booking:${hotelId}`, {
+            booking: {
+                mutation: 'CREATED',
+                node: booking,
+            },
         })
 
-        return await booking.save()
+        return booking
     } catch (e) {
+        console.log(e)
         throw new Error('Unable to create booking')
     }
 }

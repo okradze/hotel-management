@@ -2,7 +2,10 @@ import { reach } from 'yup'
 
 function handleValidate(value, setValue, path, setErrors, schema, errors) {
     try {
-        setValue(value)
+        setValue(values => ({
+            ...values,
+            value,
+        }))
         reach(schema, path).validateSync(value)
         setErrors({
             ...errors,

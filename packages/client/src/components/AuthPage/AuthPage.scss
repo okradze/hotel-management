@@ -1,15 +1,16 @@
-.LoginPage-wrapper {
+.AuthPage-wrapper {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--light-grey);
 }
 
-.LoginPage-form {
+.AuthPage-form {
     background-color: var(--white);
     border-radius: var(--border-radius);
     box-shadow: 0 0 3px rgba(var(--dark), 0.15);
-    padding: 4rem 3rem;
+    padding: 5rem;
 
     &__pg {
         margin-top: 2rem;
@@ -26,26 +27,30 @@
     &__input-group {
         display: flex;
         flex-direction: column;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
     &__error {
         margin-bottom: 2rem;
     }
 
     input {
-        min-width: 32rem;
+        background-color: var(--light-grey);
+        min-width: 35rem;
         flex: 1 1 auto;
+        font-size: 1.5rem;
     }
 
     label {
         margin-bottom: 1rem;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         color: rgba(var(--primary), 1);
+        filter: brightness(108%);
+        font-weight: 600;
     }
     button {
         margin-bottom: 2rem;
     }
 }
 .SignupForm__error {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }

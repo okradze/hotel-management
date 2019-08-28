@@ -16,6 +16,21 @@ type Mutation {
     createBooking(data: CreateBookingInput): Booking!
 }
 
+type Subscription {
+    booking: BookingSubscriptionPayload!
+}
+
+type BookingSubscriptionPayload {
+    mutation: PayloadMutationType!
+    node: Booking!
+}
+
+enum PayloadMutationType {
+    CREATED
+    UPDATED
+    DELETED
+}
+
 type Hotel {
     _id: ID!
     name: String!

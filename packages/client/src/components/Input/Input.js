@@ -1,6 +1,14 @@
 import React from 'react'
 
-const Input = ({ value, onChange, id, type, error, text }) => (
+const Input = ({
+    value,
+    onChange,
+    id,
+    type,
+    error,
+    text,
+    placeholder = '',
+}) => (
     <div className="LoginForm__input-group">
         <label htmlFor="name">{text}</label>
         <input
@@ -10,8 +18,9 @@ const Input = ({ value, onChange, id, type, error, text }) => (
             className="input"
             type={type}
             autoComplete="off"
+            placeholder={placeholder}
         />
-        <p className="error SignupForm__error">{error && error}</p>
+        {error && <p className="error SignupForm__error">{error}</p>}
     </div>
 )
 

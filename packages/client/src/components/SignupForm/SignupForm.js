@@ -4,18 +4,19 @@ import { withRouter } from 'react-router-dom'
 import { createHotelSchema } from '@hb/common'
 import { Context } from '../../context/AuthContext'
 import withLoader from '../Loader/Loader'
-import { SIGNUP } from '../LoginPage/gql'
+import { SIGNUP } from '../AuthPage/gql'
 import handleValidate from '../../utils/handleValidate'
 import Input from '../Input/Input'
-import '../LoginPage/LoginPage.scss'
+import '../AuthPage/AuthPage.scss'
 
-const SignupForm = ({ history, setIsLogin }) => {
+export const SignupForm = ({ history, setIsLogin }) => {
     const { setUser } = React.useContext(Context)
-
-    const [name, setName] = React.useState('')
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [phone, setPhone] = React.useState('')
+    const [userCredentials, setUserCredentials] = React.useState({
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+    })
     const [errors, setErrors] = React.useState({
         name: '',
         email: '',
@@ -25,49 +26,27 @@ const SignupForm = ({ history, setIsLogin }) => {
 
     const [signup, { loading }] = useMutation(SIGNUP, {
         variables: {
-            name,
-            email,
-            phone,
-            password,
+            ...userCredentials,
         },
         onCompleted: handleCompleted,
+        onError: err => {
+            if (
+                err.message.endsWith('email_taken') ||
+                err.message.endsWith('phone_taken')
+            ) {
+                setErrors({
+                    ...errors,
+                    email: 'მომხმარებელი უკვე არსებობს',
+                })
+            }
+        },
     })
 
-    function handleNameChange(e) {
+    const handleChange = (e, path) => {
         handleValidate(
             e.target.value,
-            setName,
-            'name',
-            setErrors,
-            createHotelSchema,
-            errors,
-        )
-    }
-    function handleEmailChange(e) {
-        handleValidate(
-            e.target.value,
-            setEmail,
-            'email',
-            setErrors,
-            createHotelSchema,
-            errors,
-        )
-    }
-    function handlePasswordChange(e) {
-        handleValidate(
-            e.target.value,
-            setPassword,
-            'password',
-            setErrors,
-            createHotelSchema,
-            errors,
-        )
-    }
-    function handlePhoneChange(e) {
-        handleValidate(
-            e.target.value,
-            setPhone,
-            'phone',
+            setUserCredentials,
+            path,
             setErrors,
             createHotelSchema,
             errors,
@@ -79,10 +58,7 @@ const SignupForm = ({ history, setIsLogin }) => {
         try {
             createHotelSchema.validateSync(
                 {
-                    name,
-                    email,
-                    phone,
-                    password,
+                    ...userCredentials,
                 },
                 {
                     strict: true,
@@ -112,66 +88,62 @@ const SignupForm = ({ history, setIsLogin }) => {
     const ButtonWithLoader = withLoader(() => 'რეგისტრაცია')
 
     return (
-        <div className="LoginPage-wrapper">
-            <div className="LoginPage-form">
-                <form
-                    onSubmit={e => handleSubmit(e, signup)}
-                    className="LoginForm"
-                >
-                    <Input
-                        text="სახელი"
-                        error={errors.name}
-                        value={name}
-                        onChange={handleNameChange}
-                        type="text"
-                        id="name"
-                    />
-                    <Input
-                        text="ელ-ფოსტა:"
-                        error={errors.email}
-                        value={email}
-                        onChange={handleEmailChange}
-                        type="text"
-                        id="email"
-                    />
-                    <Input
-                        text="საკონტაქტო ტელეფონი:"
-                        error={errors.phone}
-                        value={phone}
-                        onChange={handlePhoneChange}
-                        type="text"
-                        id="phone"
-                    />
-                    <Input
-                        text="პაროლი:"
-                        error={errors.password}
-                        value={password}
-                        onChange={handlePasswordChange}
-                        type="password"
-                        id="password"
-                    />
+        <>
+            <form onSubmit={e => handleSubmit(e)} className="LoginForm">
+                <Input
+                    text="სახელი"
+                    error={errors.name}
+                    value={userCredentials.name}
+                    onChange={e => handleChange(e, 'name')}
+                    type="text"
+                    id="name"
+                    placeholder="სასტუმროს სახელი"
+                />
+                <Input
+                    text="ელ-ფოსტა"
+                    error={errors.email}
+                    value={userCredentials.email}
+                    onChange={e => handleChange(e, 'email')}
+                    type="text"
+                    id="email"
+                    placeholder="შეიყვანეთ ელ-ფოსტა"
+                />
+                <Input
+                    text="საკონტაქტო ტელეფონი"
+                    error={errors.phone}
+                    value={userCredentials.phone}
+                    onChange={e => handleChange(e, 'phone')}
+                    type="text"
+                    id="phone"
+                    placeholder="შეიყვანეთ ტელეფონი"
+                />
+                <Input
+                    text="პაროლი"
+                    error={errors.password}
+                    value={userCredentials.password}
+                    onChange={e => handleChange(e, 'password')}
+                    type="password"
+                    id="password"
+                    placeholder="შეიყვანეთ პაროლი"
+                />
 
-                    <button type="submit" className="button button--secondary">
-                        <ButtonWithLoader isLoading={loading} />
-                    </button>
-                </form>
-                <div>
-                    <p
-                        role="link"
-                        tabIndex="0"
-                        onKeyPress={e => {
-                            if (e.which === 13) {
-                                setIsLogin(true)
-                            }
-                        }}
-                        onClick={() => setIsLogin(true)}
-                        className="form-link"
-                    >
-                        შესვლა
-                    </p>
-                </div>
-            </div>
-        </div>
+                <button type="submit" className="button button--secondary">
+                    <ButtonWithLoader isLoading={loading} />
+                </button>
+            </form>
+            <button
+                type="button"
+                onKeyPress={e => {
+                    if (e.which === 13) {
+                        setIsLogin(true)
+                    }
+                }}
+                onClick={() => setIsLogin(true)}
+                className="button--transparent form-link"
+            >
+                შესვლა &rarr;
+            </button>
+        </>
     )
 }
 

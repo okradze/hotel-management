@@ -9,7 +9,7 @@ const getHotelId = ({ req }, requiredAuth = true) => {
     }
 
     if (requiredAuth) {
-        throw new AuthenticationError('Authentication required')
+        throw new AuthenticationError('no_auth')
     }
 
     return null

@@ -14,7 +14,7 @@
     --light-grey: #eff3f5;
     --dark: 51, 51, 51;
     --border: #ebebeb;
-    --border-radius: 10px;
+    --border-radius: 20px;
     --focus: rgba(48, 140, 219, 1);
 }
 
@@ -31,8 +31,4 @@ body {
     -webkit-font-smoothing: antialiased;
     background-color: var(--light-grey);
     overflow-y: scroll;
-}
-
-#root {
-    padding-bottom: 3rem;
 }

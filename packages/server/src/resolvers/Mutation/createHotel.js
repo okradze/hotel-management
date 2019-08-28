@@ -1,4 +1,5 @@
 import { createHotelSchema } from '@hb/common'
+import { UserInputError } from 'apollo-server-express'
 import generateToken from '../../utils/generateToken'
 import hashPassword from '../../utils/hashPassword'
 import setCookie from '../../utils/setCookie'
@@ -27,6 +28,20 @@ export default async function createHotel(parent, { data }, { res }) {
 
         return newHotel
     } catch (e) {
-        throw new Error('Unable to register')
+        if (e.inner) {
+            const errors = []
+
+            e.inner.forEach(({ path, message }) => {
+                errors.push({
+                    [path]: [message],
+                })
+            })
+
+            throw new UserInputError('invalid_input', errors)
+        }
+        if (e.code === 11000) {
+            const keys = Object.keys(e.keyPattern)
+            throw new Error(`${keys[0]}_taken`)
+        }
     }
 }
