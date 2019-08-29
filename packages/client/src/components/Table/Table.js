@@ -13,6 +13,7 @@ Number.prototype.pad = function(size) {
 }
 
 const Table = () => {
+<<<<<<< HEAD
     const {
         current,
         setCurrent,
@@ -20,6 +21,11 @@ const Table = () => {
         data,
         loading,
     } = React.useContext(DashboardContext)
+=======
+    const { current, setCurrent, tempBooking, data, loading } = React.useContext(
+        DashboardContext,
+    )
+>>>>>>> 951c055198952918d18b83a8e855a3a6977963ef
 
     const daysInMonth = new Date(
         current.getFullYear(),
