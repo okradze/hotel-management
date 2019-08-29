@@ -1,0 +1,112 @@
+type Query {
+    rooms(data: QueryRoomsInput!): [Room!]!
+    guests(data: QueryGuestsInput!): [Guest!]!
+    refreshToken: Hotel!
+    roomsCount: Int!
+    guestsCount: Int!
+    revenueData(startDate: Int!): [Float!]!
+}
+
+type Mutation {
+    login(data: LoginHotelInput): Hotel!
+    logout: Boolean!
+    createHotel(data: CreateHotelInput): Hotel!
+    createRoom(data: CreateRoomInput): Room!
+    createGuest(data: CreateGuestInput): Guest!
+    createBooking(data: CreateBookingInput): Booking!
+}
+
+type Subscription {
+    booking: BookingSubscriptionPayload!
+}
+
+type BookingSubscriptionPayload {
+    mutation: PayloadMutationType!
+    node: Booking!
+}
+
+enum PayloadMutationType {
+    CREATED
+    UPDATED
+    DELETED
+}
+
+type Hotel {
+    _id: ID!
+    name: String!
+    email: String!
+    phone: String!
+    createdAt: String!
+    rooms: [Room!]!
+    bookings: [Booking!]!
+    guests: [Guest!]!
+}
+
+type Room {
+    _id: ID!
+    roomNumber: Int!
+    rate: Int!
+    type: String!
+    hotel: Hotel!
+    bookings(startDate: String!): [Booking!]!
+}
+
+type Guest {
+    _id: ID!
+    name: String!
+    phone: String!
+    hotel: Hotel!
+    bookings: [Booking!]!
+}
+
+type Booking {
+    _id: ID!
+    hotel: Hotel!
+    room: Room!
+    guest: Guest!
+    checkIn: String!
+    checkOut: String!
+    color: String!
+}
+
+input QueryRoomsInput {
+    query: String
+    skip: Int
+    limit: Int!
+}
+
+input QueryGuestsInput {
+    query: String!
+    limit: Int!
+}
+
+input LoginHotelInput {
+    email: String!
+    password: String!
+}
+
+input CreateHotelInput {
+    name: String!
+    email: String!
+    phone: String!
+    password: String!
+}
+
+input CreateRoomInput {
+    roomNumber: Int!
+    rate: Int!
+    type: String!
+}
+
+input CreateGuestInput {
+    name: String!
+    phone: String!
+}
+
+input CreateBookingInput {
+    checkIn: String!
+    checkOut: String!
+    color: String!
+    room: ID!
+    guest: ID!
+}

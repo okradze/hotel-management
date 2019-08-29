@@ -1,0 +1,12 @@
+.input {
+    padding: 1.2rem 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 2px rgba(var(--dark), 0.1);
+    border: 1px solid var(--border);
+    transition: box-shadow 0.15s ease-in-out;
+
+    &:focus {
+        outline: transparent;
+        box-shadow: var(--focus) 0 0 0 2px;
+    }
+}

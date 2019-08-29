@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm renders 1`] = `
+<Fragment>
+  <form
+    className="LoginForm"
+    onSubmit={[Function]}
+  >
+    <Input
+      id="email"
+      onChange={[Function]}
+      placeholder="შეიყვანეთ ელ-ფოსტა"
+      text="ელ-ფოსტა"
+      type="text"
+      value="abc"
+    />
+    <Input
+      id="password"
+      onChange={[Function]}
+      placeholder="შეიყვანეთ პაროლი"
+      text="პაროლი"
+      type="password"
+      value="abc"
+    />
+    <p
+      className="LoginForm__error error"
+    >
+      abc
+    </p>
+    <button
+      className="button button--secondary"
+      type="submit"
+    >
+      <Component
+        isLoading={false}
+      />
+    </button>
+  </form>
+  <button
+    className="button--transparent form-link"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    type="button"
+  >
+    რეგისტრაცია →
+  </button>
+</Fragment>
+`;

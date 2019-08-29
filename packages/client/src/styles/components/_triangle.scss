@@ -1,0 +1,21 @@
+.triangle {
+    display: block;
+    cursor: pointer;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+.triangle--left {
+    border-width: 7.5px 15px 7.5px 0;
+    border-color: transparent #ccc transparent transparent;
+}
+
+.triangle--right {
+    border-width: 7.5px 0 7.5px 15px;
+    border-color: transparent transparent transparent #ccc;
+}
+
+.triangle--bottom {
+    border-width: 10px 10px 0 10px;
+    border-color: rgba(240, 128, 60, 1) transparent transparent transparent;
+}

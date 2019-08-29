@@ -1,0 +1,11 @@
+{
+    "name": "@hb/common",
+    "version": "1.0.0",
+    "description": "Common files for server and client",
+    "main": "index.js",
+    "author": "Mirian Okradze",
+    "license": "ISC",
+    "dependencies": {
+        "yup": "^0.27.0"
+    }
+}

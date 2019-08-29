@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectItem renders 1`] = `
+<li
+  className="select__item"
+>
+  <button
+    className="button--transparent"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    type="button"
+  >
+    abc
+  </button>
+</li>
+`;

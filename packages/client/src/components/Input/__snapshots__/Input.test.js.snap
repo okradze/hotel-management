@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input renders 1`] = `
+<div
+  className="LoginForm__input-group"
+>
+  <label
+    htmlFor="name"
+  >
+    Email
+  </label>
+  <input
+    autoComplete="off"
+    className="input"
+    id="email"
+    onChange={[MockFunction]}
+    placeholder=""
+    type="email"
+    value=""
+  />
+</div>
+`;
+
+exports[`Input renders with error 1`] = `
+<div
+  className="LoginForm__input-group"
+>
+  <label
+    htmlFor="name"
+  >
+    Email
+  </label>
+  <input
+    autoComplete="off"
+    className="input"
+    id="email"
+    onChange={[MockFunction]}
+    placeholder=""
+    type="email"
+    value=""
+  />
+  <p
+    className="error SignupForm__error"
+  >
+    Email is not valid
+  </p>
+</div>
+`;
