@@ -82,6 +82,9 @@ const BookForm = ({ refetchDashboardData }) => {
                     checkIn: startDate.toISOString(),
                     checkOut: endDate.toISOString(),
                 },
+                // update(cache, { data: { createBooking } }) {
+                //     const data = cache.readQuery({query: CREATE_BOOKING, variables:})
+                // },
             })
 
             client.clearStore().then(() => {

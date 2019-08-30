@@ -46,25 +46,15 @@ export const SignupForm = ({ history, setIsLogin }) => {
         handleValidate(
             e.target.value,
             setUserCredentials,
-            path,
             setErrors,
+            path,
             createHotelSchema,
-            errors,
         )
     }
 
     function handleSubmit(e) {
         e.preventDefault()
         try {
-            createHotelSchema.validateSync(
-                {
-                    ...userCredentials,
-                },
-                {
-                    strict: true,
-                    abortEarly: false,
-                },
-            )
             signup()
         } catch (e) {
             if (e.inner) {
@@ -75,6 +65,18 @@ export const SignupForm = ({ history, setIsLogin }) => {
                     }))
                 })
             }
+        }
+    }
+
+    const isButtonDisabled = () => {
+        try {
+            createHotelSchema.validateSync(userCredentials, {
+                strict: true,
+                abortEarly: false,
+            })
+            return false
+        } catch (e) {
+            return true
         }
     }
 
@@ -127,7 +129,11 @@ export const SignupForm = ({ history, setIsLogin }) => {
                     placeholder="შეიყვანეთ პაროლი"
                 />
 
-                <button type="submit" className="button button--secondary">
+                <button
+                    disabled={isButtonDisabled()}
+                    type="submit"
+                    className="button button--secondary"
+                >
                     <ButtonWithLoader isLoading={loading} />
                 </button>
             </form>

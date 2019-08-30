@@ -92,10 +92,9 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
                         handleValidate(
                             Number.parseInt(e.target.value, 10),
                             setRoomNumber,
-                            'roomNumber',
                             setErrors,
+                            'roomNumber',
                             createRoomSchema,
-                            errors,
                         )
                     }
                     type="number"
@@ -109,10 +108,9 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
                         handleValidate(
                             Number.parseInt(e.target.value, 10),
                             setRate,
-                            'rate',
                             setErrors,
+                            'rate',
                             createRoomSchema,
-                            errors,
                         )
                     }
                     id="rate"
@@ -127,10 +125,9 @@ const RoomModal = ({ modalRoomIsOpen, setModalRoomIsOpen, handleChoose }) => {
                         handleValidate(
                             e.target.value,
                             setType,
-                            'type',
                             setErrors,
+                            'type',
                             createRoomSchema,
-                            errors,
                         )
                     }
                     id="type"

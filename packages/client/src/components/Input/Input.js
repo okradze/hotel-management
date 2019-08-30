@@ -1,25 +1,9 @@
 import React from 'react'
 
-const Input = ({
-    value,
-    onChange,
-    id,
-    type,
-    error,
-    text,
-    placeholder = '',
-}) => (
+const Input = ({ onChange, text, error, ...otherProps }) => (
     <div className="LoginForm__input-group">
         <label htmlFor="name">{text}</label>
-        <input
-            id={id}
-            value={value}
-            onChange={onChange}
-            className="input"
-            type={type}
-            autoComplete="off"
-            placeholder={placeholder}
-        />
+        <input onChange={onChange} className="input" {...otherProps} />
         {error && <p className="error SignupForm__error">{error}</p>}
     </div>
 )

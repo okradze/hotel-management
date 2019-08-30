@@ -1,41 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import Color from './Color'
+import ColorsOverview from './ColorsOverview'
+import ColorPreviewButton from './ColorPreviewButton'
 import './ColorPicker.scss'
 
 const ColorPicker = ({ colors, color, setColor }) => {
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className="ColorPicker-wrapper">
+        <div className="ColorPicker">
             <OutsideClickHandler onOutsideClick={() => setIsOpen(false)}>
-                <div
-                    role="button"
-                    tabIndex="0"
-                    onKeyPress={e => {
-                        if (e.which === 13) {
-                            setIsOpen(!isOpen)
-                        }
-                    }}
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="ColorPicker-input"
-                    style={{
-                        backgroundColor: color,
-                    }}
-                />
+                <ColorPreviewButton setIsOpen={setIsOpen} color={color} />
                 {isOpen && (
-                    <div className="ColorPicker">
-                        {colors.map((currentColor, index) => (
-                            <Color
-                                currentColor={currentColor}
-                                handleColorChoose={() => {
-                                    setColor(currentColor)
-                                    setIsOpen(false)
-                                }}
-                                key={index}
-                            />
-                        ))}
-                    </div>
+                    <ColorsOverview
+                        setIsOpen={setIsOpen}
+                        colors={colors}
+                        setColor={setColor}
+                    />
                 )}
             </OutsideClickHandler>
         </div>

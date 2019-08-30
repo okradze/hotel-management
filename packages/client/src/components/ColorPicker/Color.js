@@ -13,7 +13,7 @@ const Color = ({ currentColor, handleColorChoose }) => (
         style={{
             backgroundColor: currentColor,
         }}
-        className="ColorPicker__color"
+        className="ColorPicker-overview__color"
     />
 )
 

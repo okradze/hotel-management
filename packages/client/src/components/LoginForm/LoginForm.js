@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { withRouter } from 'react-router-dom'
 import { Context } from '../../context/AuthContext'
@@ -7,16 +7,15 @@ import Input from '../Input/Input'
 import withLoader from '../Loader'
 
 export const LoginForm = ({ history, setIsLogin }) => {
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [error, setError] = React.useState('')
-    const { setUser } = React.useContext(Context)
+    const [loginCredentials, setLoginCredentials] = useState({
+        email: '',
+        password: '',
+    })
+    const [error, setError] = useState('')
+    const { setUser } = useContext(Context)
 
     const [login, { loading }] = useMutation(LOGIN, {
-        variables: {
-            email,
-            password,
-        },
+        variables: loginCredentials,
         onCompleted: handleCompleted,
         onError: err => {
             if (err.message.endsWith('no_user')) {
@@ -26,23 +25,37 @@ export const LoginForm = ({ history, setIsLogin }) => {
     })
 
     function handleEmailChange(e) {
-        setEmail(e.target.value)
+        setLoginCredentials({
+            ...loginCredentials,
+            email: e.target.value,
+        })
     }
 
     function handlePasswordChange(e) {
-        setPassword(e.target.value)
+        setLoginCredentials({
+            ...loginCredentials,
+            password: e.target.value,
+        })
     }
 
-    function handleSubmit(e) {
-        e.preventDefault()
+    const isButtonDisabled = () => {
+        const { email, password } = loginCredentials
+
         if (
             email.length >= 1 &&
             email.length <= 100 &&
             password.length >= 1 &&
             password.length <= 64
         ) {
-            login()
+            return false
         }
+        return true
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+
+        login()
     }
 
     function handleCompleted({ login }) {
@@ -59,24 +72,28 @@ export const LoginForm = ({ history, setIsLogin }) => {
             <form onSubmit={e => handleSubmit(e)} className="LoginForm">
                 <Input
                     text="ელ-ფოსტა"
-                    value={email}
+                    value={loginCredentials.email}
                     onChange={handleEmailChange}
                     type="text"
                     id="email"
-                    placeholder={'შეიყვანეთ ელ-ფოსტა'}
+                    placeholder="შეიყვანეთ ელ-ფოსტა"
                 />
                 <Input
                     text="პაროლი"
-                    value={password}
+                    value={loginCredentials.password}
                     onChange={handlePasswordChange}
                     type="password"
                     id="password"
-                    placeholder={'შეიყვანეთ პაროლი'}
+                    placeholder="შეიყვანეთ პაროლი"
                 />
 
                 {error && <p className="LoginForm__error error">{error}</p>}
 
-                <button type="submit" className="button button--secondary">
+                <button
+                    disabled={isButtonDisabled()}
+                    type="submit"
+                    className="button button--secondary"
+                >
                     <ButtonWithLoader isLoading={loading} />
                 </button>
             </form>

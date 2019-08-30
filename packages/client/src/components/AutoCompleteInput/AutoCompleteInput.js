@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
-import './AutoCompleteInput.scss'
-import PlusSvg from '../../svg/Plus'
+import AutoCompleteInputItemOverview from './AutoCompleteInputItemOverview'
+import AutoCompleteInputPlusButton from './AutoCompleteInputPlusButton'
 import withLoader from '../Loader'
+import './AutoCompleteInput.scss'
 
 const AutoCompleteInput = ({
     setValue,
@@ -10,36 +11,26 @@ const AutoCompleteInput = ({
     placeholder,
     data,
     handleChange,
-    loading,
-    handleModalOpen,
     handleChoose,
     renderItem,
+    handleModalOpen,
+    loading,
 }) => {
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
-    const AutoCompleteWithLoader = withLoader(({ data }) =>
-        data.map((item, index) => (
-            <li className="AutoComplete__item" key={index}>
-                <span
-                    role="button"
-                    onKeyPress={e => {
-                        if (e.which === 13) {
-                            handleChoose(item)
-                            setIsOpen(false)
-                        }
-                    }}
-                    tabIndex="0"
-                    onClick={() => {
-                        handleChoose(item)
-                        setIsOpen(false)
-                    }}
-                    className="AutoComplete__button"
-                >
-                    {renderItem(item)}
-                </span>
-            </li>
-        )),
-    )
+    const handleInputChange = e => {
+        setValue(e.target.value)
+        setIsOpen(true)
+        handleChange(e.target.value)
+    }
+
+    const AutoCompleteWithLoader = withLoader(() => (
+        <AutoCompleteInputItemOverview
+            handleChoose={handleChoose}
+            renderItem={renderItem}
+            data={data}
+        />
+    ))
 
     return (
         <OutsideClickHandler
@@ -51,27 +42,13 @@ const AutoCompleteInput = ({
                 <input
                     value={value}
                     className="AutoCompleteInput__input"
-                    onChange={e => {
-                        setValue(e.target.value)
-                        setIsOpen(true)
-                        handleChange(e.target.value)
-                    }}
+                    onChange={handleInputChange}
                     type="text"
                     placeholder={placeholder}
                 />
-                <span
-                    tabIndex="0"
-                    role="button"
-                    onKeyPress={e => {
-                        if (e.which === 13) {
-                            handleModalOpen()
-                        }
-                    }}
-                    onClick={handleModalOpen}
-                    className="AutoCompleteInput__plus-wrapper"
-                >
-                    <PlusSvg className="AutoCompleteInput__plus" />
-                </span>
+                <AutoCompleteInputPlusButton
+                    handleModalOpen={handleModalOpen}
+                />
                 {isOpen && (
                     <ul className="AutoComplete">
                         <AutoCompleteWithLoader
@@ -79,7 +56,6 @@ const AutoCompleteInput = ({
                                 padding: '10px 0',
                             }}
                             isLoading={loading}
-                            data={data}
                         />
                     </ul>
                 )}

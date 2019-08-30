@@ -88,10 +88,9 @@ const GuestModal = ({
                         handleValidate(
                             e.target.value,
                             setName,
-                            'name',
                             setErrors,
+                            'name',
                             createGuestSchema,
-                            errors,
                         )
                     }
                     type="text"
@@ -105,10 +104,9 @@ const GuestModal = ({
                         handleValidate(
                             e.target.value,
                             setPhone,
-                            'phone',
                             setErrors,
+                            'phone',
                             createGuestSchema,
-                            errors,
                         )
                     }
                     id="phone"

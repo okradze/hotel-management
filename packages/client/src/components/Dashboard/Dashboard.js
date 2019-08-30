@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import BookForm from '../BookForm'
-import Table from '../Table'
 import DashboardContext from './DashboardContext'
+import Table from '../Table'
 import GET_DASHBOARD_DATA from './gql'
 
 const Dashboard = () => {

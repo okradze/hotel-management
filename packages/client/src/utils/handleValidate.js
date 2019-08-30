@@ -1,21 +1,21 @@
 import { reach } from 'yup'
 
-function handleValidate(value, setValue, path, setErrors, schema, errors) {
+function handleValidate(value, setValue, setErrors, path, schema) {
     try {
         setValue(values => ({
             ...values,
-            value,
+            [path]: value,
         }))
         reach(schema, path).validateSync(value)
-        setErrors({
+        setErrors(errors => ({
             ...errors,
             [path]: '',
-        })
+        }))
     } catch (e) {
-        setErrors({
+        setErrors(errors => ({
             ...errors,
             [path]: e.message,
-        })
+        }))
     }
 }
 
